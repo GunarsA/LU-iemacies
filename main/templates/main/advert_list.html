@@ -1,0 +1,16 @@
+{% extends 'main/main.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Adverts</h1>
+    <a href="{% url 'advert_create' %}">Create advert</a>
+    <ul>
+        {% for advert in advert_list %}
+        <li><a href="{% url 'advert_detail' advert.id %}">{{ advert.description }}</a></li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}

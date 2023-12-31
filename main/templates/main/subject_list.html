@@ -1,0 +1,15 @@
+{% extends 'main/main.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Subjects</h1>
+    <ul>
+        {% for subject in subject_list %}
+        <li><a href="{% url 'subject_detail' subject.id %}">{{ subject.title }}</a></li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+{% endblock %}
