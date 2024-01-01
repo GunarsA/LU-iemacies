@@ -30,6 +30,11 @@ class Message(models.Model):
 
 class Advert(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    subject = models.ForeignKey(
+        'Subject',
+        on_delete=models.CASCADE,
+        related_name='adverts'
+    )
     description = models.TextField(blank=True)
     price = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)

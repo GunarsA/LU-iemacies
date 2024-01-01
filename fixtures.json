@@ -1,0 +1,50 @@
+[
+  {
+    "model": "main.subject",
+    "pk": 1,
+    "fields": {
+      "title": "test",
+      "description": "",
+      "created_at": "2023-12-13T10:48:16.041Z",
+      "updated_at": "2023-12-13T10:48:16.041Z",
+      "sub_subjects": [],
+      "pursuers": [1]
+    }
+  },
+  {
+    "model": "main.subject",
+    "pk": 2,
+    "fields": {
+      "title": "test2",
+      "description": "",
+      "created_at": "2023-12-13T10:48:34.426Z",
+      "updated_at": "2023-12-13T10:48:34.426Z",
+      "sub_subjects": [],
+      "pursuers": []
+    }
+  },
+  {
+    "model": "main.subject",
+    "pk": 3,
+    "fields": {
+      "title": "Lineara algebra",
+      "description": "teteta",
+      "created_at": "2023-12-14T13:03:20.481Z",
+      "updated_at": "2023-12-14T13:03:20.481Z",
+      "sub_subjects": [1],
+      "pursuers": []
+    }
+  },
+  {
+    "model": "main.subject",
+    "pk": 4,
+    "fields": {
+      "title": "Lineara algebra2",
+      "description": "jajaja",
+      "created_at": "2023-12-14T13:04:16.971Z",
+      "updated_at": "2023-12-31T11:33:56.383Z",
+      "sub_subjects": [3],
+      "pursuers": []
+    }
+  }
+]
