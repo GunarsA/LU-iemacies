@@ -10,6 +10,9 @@ class Profile(models.Model):
 
     def chats(self):
         return Chat.objects.filter(sender=self.user) | Chat.objects.filter(receiver=self.user)
+    
+    def __str__(self) -> str:
+        return self.user.username
 
 
 class Chat(models.Model):
@@ -37,6 +40,7 @@ class Advert(models.Model):
     )
     description = models.TextField(blank=True)
     price = models.IntegerField()
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

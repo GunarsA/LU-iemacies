@@ -54,6 +54,10 @@ def registerPage(request):
             user = form.save(commit=False)
             user.username = user.username.lower()
             user.save()
+            user.profile = Profile.objects.create(user=user)
+
+            messages.success(request, 'User account was created')
+
             login(request, user)
             return redirect('home')
         else:
@@ -71,6 +75,10 @@ class AdvertListView(generic.ListView):
     model = Advert
     template_name = 'main/advert_list.html'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(is_active=True)
+
 
 @method_decorator(login_required(login_url='login'), name='dispatch')
 class AdvertCreateView(generic.CreateView):
@@ -78,6 +86,12 @@ class AdvertCreateView(generic.CreateView):
     template_name = 'main/advert_form.html'
     form_class = AdvertForm
     success_url = '/'
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if self.kwargs.get('pk'):
+            initial['subject'] = self.kwargs.get('pk')
+        return initial
 
     def form_valid(self, form):
         form.instance.owner = self.request.user

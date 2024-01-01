@@ -16,6 +16,7 @@ urlpatterns = [
     path("advert/", views.AdvertListView.as_view(), name="adverts"),
     path("advert/<int:pk>", views.AdvertDetailView.as_view(), name="advert_detail"),
     path("advert/create", views.AdvertCreateView.as_view(), name="advert_create"),
+    path("advert/create/<int:pk>", views.AdvertCreateView.as_view(), name="advert_create"),
     path("advert/<int:pk>/update", views.AdvertUpdateView.as_view(), name="advert_update"),
 
     path("application/create/<int:pk>", views.createApplication, name="application_create"),
