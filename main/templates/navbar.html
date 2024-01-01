@@ -1,0 +1,14 @@
+<nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="{% url 'adverts' %}">Adverts</a></li>
+        
+        {% if request.user.is_authenticated %}
+        <li>{{user.username}}</li>
+        <li><a href="{% url 'logout' %}">Logout</a></a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>
+        <li><a href="{% url 'register' %}">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>

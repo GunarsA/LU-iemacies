@@ -9,10 +9,10 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=100, blank=True)
 
     def chats(self):
-        return Message.objects.filter(sender=self.user) | Message.objects.filter(receiver=self.user)
+        return Chat.objects.filter(sender=self.user) | Chat.objects.filter(receiver=self.user)
 
 
-class Message(models.Model):
+class Chat(models.Model):
     sender = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -40,6 +40,9 @@ class Advert(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = [['owner', 'subject']]
+
 
 class Application(models.Model):
     class Status(models.TextChoices):
@@ -66,6 +69,29 @@ class Application(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        unique_together = [['advert', 'applicant']]
+
+
+class Lesson(models.Model):
+    class Status(models.TextChoices):
+        UPCOMING = 'UPCOMING'
+        FINISHED = 'FINISHED'
+
+    application = models.ForeignKey(
+        Application,
+        on_delete=models.CASCADE,
+        related_name='lessons'
+    )
+    description = models.CharField(max_length=100)
+    status = models.CharField(
+        max_length=10,
+        choices=Status.choices,
+        default=Status.UPCOMING
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
 
 class Review(models.Model):
     advert = models.ForeignKey(
@@ -84,6 +110,9 @@ class Review(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = [['advert', 'reviewer']]
 
 
 class Complaint(models.Model):

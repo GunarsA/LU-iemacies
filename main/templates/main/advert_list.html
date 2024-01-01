@@ -1,4 +1,4 @@
-{% extends 'main/main.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 
@@ -7,7 +7,7 @@
     <a href="{% url 'advert_create' %}">Create advert</a>
     <ul>
         {% for advert in advert_list %}
-        <li><a href="{% url 'advert_detail' advert.id %}">{{ advert.description }}</a></li>
+        <li><a href="{% url 'advert_detail' advert.id %}">{{ advert.owner }} - {{advert.subject}}</a></li>
         {% endfor %}
     </ul>
 
