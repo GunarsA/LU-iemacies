@@ -9,7 +9,7 @@
     <h2>Description</h2>
     <p>{{ subject.description }}</p>
 
-    {% if request.user.is_authenticated and user.groups.all.0.name == 'teacher' %}
+    {% if user.is_authenticated and user.groups.all.0.name == 'teacher' %}
     <a href="{% url 'advert_create' subject.id %}">Create Advert</a>
     {% endif %}
 

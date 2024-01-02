@@ -20,4 +20,11 @@ urlpatterns = [
     path("advert/<int:pk>/update", views.AdvertUpdateView.as_view(), name="advert_update"),
 
     path("application/create/<int:pk>", views.createApplication, name="application_create"),
+    path("application/<int:pk>", views.viewApplication, name="application_detail"),
+
+    path("chat/", views.chatListView, name="chats"),
+    path("chat/<int:pk>", views.chatDetailView, name="chat_detail"),
+
+    path("profile/<int:pk>", views.profileDetailView, name="profile_detail"),
+    path("profile/<int:pk>/update", views.profileUpdateView, name="profile_update"),
 ]

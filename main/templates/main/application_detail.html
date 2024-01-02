@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1>{{ application.applicant }} - {{application.advert.subject.title}}</h1>
+
+    <h2>Description</h2>
+    <p>{{ application.description }}</p>
+
+    <h2>Status</h2>
+    <p>{{ application.status }}</p>
+
+    {% if user == application.advert.owner%}
+    <form method="post">
+        {% csrf_token %}
+        {% if application.status.lower == 'pending' %}
+        <button type="submit" name="status" value="ongoing">Accept</button>
+        <button type="submit" name="status" value="finished">Reject</button>
+        {% elif application.status.lower == 'finished' %}
+        <button type="submit" name="status" value="ongoing">Reopen</button>
+        {% endif %}
+    </form>
+    {% endif %}
+
+    {% if application.status.lower == 'ongoing' %}
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="status" value="finished">End</button>
+    </form>
+    {% endif %}
+
+</div>
+
+{% endblock %}

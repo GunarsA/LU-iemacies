@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Chat with {{receiver.username}}</h1>
+
+<div class="container">
+
+    <ul>
+        {% for message in chat %}
+        <li>{{ message.sender }} ({{message.created_at}}): {{message.message}}</li>
+        {% endfor %}
+    </ul>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="message">
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+{% endblock %}

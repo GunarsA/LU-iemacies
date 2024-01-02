@@ -4,11 +4,24 @@
 
 <div class="container">
     <h1>Subjects</h1>
-    <ul>
-        {% for subject in subject_list %}
-        <li><a href="{% url 'subject_detail' subject.id %}">{{ subject.title }}</a></li>
-        {% endfor %}
-    </ul>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Description</th>
+                <th>Advert count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subject in subject_list %}
+            <tr>
+                <td><a href="{% url 'subject_detail' subject.id %}">{{ subject.title }}</a></td>
+                <td>{{ subject.description }}</td>
+                <td>{{ subject.adverts.all.count }}</td>
+            </tr>
+            {% endfor %}
+    </table>
 
 </div>
 

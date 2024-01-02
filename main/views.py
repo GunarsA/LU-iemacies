@@ -18,6 +18,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from django.http import Http404
+
+from django.urls import reverse
+
 
 def loginPage(request):
     page = 'login'
@@ -138,6 +142,53 @@ def createApplication(request, pk):
     return render(request, 'main/application_form.html', {'form': form})
 
 
+@login_required(login_url='login')
+def viewApplication(request, pk):
+    if not Application.objects.filter(id=pk).exists():
+        # return 404
+        raise Http404("This page does not exist :(")
+
+    if (request.user != Application.objects.get(id=pk).advert.owner
+            and request.user != Application.objects.get(id=pk).applicant):
+        messages.error(request, 'You don\'t have access to this application!')
+        return redirect('home')
+
+    application = Application.objects.get(id=pk)
+
+    if request.method == 'POST':
+        application.status = request.POST.get('status').lower()
+        application.save()
+        return redirect(reverse('application_detail', args=[pk]))
+
+    return render(request, 'main/application_detail.html', {'application': application})
+
+
+@login_required(login_url='login')
+def chatListView(request):
+    chats = request.user.profile.reachable_users()
+    print(chats[0])
+    return render(request, 'main/chat_list.html', {'chats': chats})
+
+
+@login_required(login_url='login')
+def chatDetailView(request, pk):
+    if not request.user.profile.reachable_users().filter(id=pk).exists():
+        messages.error(request, 'You don\'t have access to this chat!')
+        return redirect('home')
+
+    chat = Chat.objects.filter(sender=request.user, receiver=pk) | Chat.objects.filter(
+        sender=pk, receiver=request.user)
+    receiver = User.objects.get(id=pk)
+
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        if message:
+            chat = Chat.objects.create(sender=request.user, receiver=User.objects.get(id=pk), message=message)
+            return redirect(reverse('chat_detail', args=[pk]))
+
+    return render(request, 'main/chat_detail.html', {'chat': chat, 'receiver': receiver})
+
+
 class SubjectListView(generic.ListView):
     model = Subject
     template_name = 'main/subject_list.html'
@@ -146,3 +197,35 @@ class SubjectListView(generic.ListView):
 class SubjectDetailView(generic.DetailView):
     model = Subject
     template_name = 'main/subject_detail.html'
+
+
+def profileDetailView(request, pk):
+    if not User.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    profile = User.objects.get(id=pk).profile
+
+    return render(request, 'main/profile_detail.html', {'profile': profile})
+
+
+@login_required(login_url='login')
+def profileUpdateView(request, pk):
+    if not User.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+    
+    if request.user != User.objects.get(id=pk):
+        messages.error(request, 'You don\'t have access to this profile!')
+        return redirect('home')
+
+    profile = User.objects.get(id=pk).profile
+
+    if request.method == 'POST':
+        profile.user.username = request.POST.get('username')
+        profile.user.save()
+        profile.description = request.POST.get('description')
+        profile.save()
+        return redirect(reverse('profile_detail', args=[pk]))
+
+    return render(request, 'main/profile_form.html', {'profile': profile})
+
+

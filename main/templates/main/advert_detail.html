@@ -15,9 +15,9 @@
 
     <h2>Applications</h2>
 
-    {% if request.user.is_authenticated and request.user == advert.owner %}
+    {% if user.is_authenticated and user == advert.owner %}
     {% for application in advert.applications.all %}
-    <p>{{ application.applicant }} - {{ application.description }}</p>
+    <p><a href="{% url 'application_detail' application.id %}">{{ application.applicant }} - {{ application.description }}</a></p>
     {% endfor %}
     {% endif %}
 

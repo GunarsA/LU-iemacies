@@ -8,8 +8,17 @@ class Profile(models.Model):
 
     full_name = models.CharField(max_length=100, blank=True)
 
-    def chats(self):
-        return Chat.objects.filter(sender=self.user) | Chat.objects.filter(receiver=self.user)
+    description = models.TextField(blank=True)
+
+    def reachable_users(self):
+        """
+        Returns a queryset of users who are reachable by the current user.
+        Reachable users include teachers, students, and users with whom the current user has existing chats.
+        """
+        teachers = set(Application.objects.filter(applicant=self.user).values_list('advert__owner', flat=True))
+        students = set(Application.objects.filter(advert__owner=self.user).values_list('applicant', flat=True))
+        existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
+        return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
     
     def __str__(self) -> str:
         return self.user.username
@@ -30,6 +39,9 @@ class Chat(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self) -> str:
+        return f'{self.sender} -> {self.receiver}'
+
 
 class Advert(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -46,6 +58,9 @@ class Advert(models.Model):
 
     class Meta:
         unique_together = [['owner', 'subject']]
+
+    def __str__(self) -> str:
+        return f'{self.owner} - {self.subject}'
 
 
 class Application(models.Model):
@@ -76,6 +91,9 @@ class Application(models.Model):
     class Meta:
         unique_together = [['advert', 'applicant']]
 
+    def __str__(self) -> str:
+        return f'{self.applicant} - {self.advert}'
+
 
 class Lesson(models.Model):
     class Status(models.TextChoices):
@@ -95,6 +113,9 @@ class Lesson(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return f'{self.application} - {self.description}'
 
 
 class Review(models.Model):
@@ -117,6 +138,9 @@ class Review(models.Model):
 
     class Meta:
         unique_together = [['advert', 'reviewer']]
+
+    def __str__(self) -> str:
+        return f'{self.reviewer} - {self.advert}'
 
 
 class Complaint(models.Model):
