@@ -27,4 +27,8 @@ urlpatterns = [
 
     path("profile/<int:pk>", views.profileDetailView, name="profile_detail"),
     path("profile/<int:pk>/update", views.profileUpdateView, name="profile_update"),
+
+    path("review/create/<int:pk>", views.createReview, name="review_create"),
+    path("review/<int:pk>", views.viewReview, name="review_detail"),
+    path("review/<int:pk>/update", views.updateReview, name="review_update"),
 ]

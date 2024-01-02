@@ -2,15 +2,25 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mx-auto px-4 py-8">
 
-    <h1>{{ subject.title }}</h1>
+    <h1 class="text-2xl font-bold">{{ subject.title }}</h1>
 
-    <h2>Description</h2>
-    <p>{{ subject.description }}</p>
+    <h2 class="text-xl font-bold mt-4">Description</h2>
+    <p class="mt-2">{{ subject.description }}</p>
+
+    <h2 class="text-xl font-bold mt-4">Dependencies</h2>
+    {% for subject in subject.sub_subjects.all %}
+    <p class="mt-2"><a href="{% url 'subject_detail' subject.id %}" class="text-blue-500 hover:underline">{{ subject.title }}</a></p>
+    {% endfor %}
+
+    <h2 class="text-xl font-bold mt-4">Adverts</h2>
+    {% for advert in subject.adverts.all %}
+    <p class="mt-2"><a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">{{ advert.owner }} - {{ advert.subject }}</a></p>
+    {% endfor %}
 
     {% if user.is_authenticated and user.groups.all.0.name == 'teacher' %}
-    <a href="{% url 'advert_create' subject.id %}">Create Advert</a>
+    <a href="{% url 'advert_create' subject.id %}" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create Advert</a>
     {% endif %}
 
 </div>

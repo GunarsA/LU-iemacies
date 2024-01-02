@@ -10,6 +10,9 @@
     <a href="{% url 'advert_update' advert.id %}">Update advert</a>
     {% endif %}
 
+    <h2>Average Rating</h2>
+    <p>{{ advert.get_average_rating|default:"No reviews"}}</p>
+
     <h2>Description</h2>
     <p>{{ advert.description }}</p>
 
@@ -22,6 +25,14 @@
     {% endif %}
 
     <a href="{% url 'application_create' advert.id %}">Create application</a>
+
+    <h2>Reviews</h2>
+
+    {% for review in advert.reviews.all %}
+    <p><a href="{% url 'review_detail' review.id %}">{{ review.reviewer }} - {{ review.review }}</a></p>
+    {% endfor %}
+
+    <a href="{% url 'review_create' advert.id %}">Create review</a>
 
 </div>
 

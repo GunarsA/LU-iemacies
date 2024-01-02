@@ -15,11 +15,14 @@ class Profile(models.Model):
         Returns a queryset of users who are reachable by the current user.
         Reachable users include teachers, students, and users with whom the current user has existing chats.
         """
-        teachers = set(Application.objects.filter(applicant=self.user).values_list('advert__owner', flat=True))
-        students = set(Application.objects.filter(advert__owner=self.user).values_list('applicant', flat=True))
-        existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
+        teachers = set(Application.objects.filter(
+            applicant=self.user).values_list('advert__owner', flat=True))
+        students = set(Application.objects.filter(
+            advert__owner=self.user).values_list('applicant', flat=True))
+        existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(
+            Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
         return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
-    
+
     def __str__(self) -> str:
         return self.user.username
 
@@ -59,6 +62,9 @@ class Advert(models.Model):
     class Meta:
         unique_together = [['owner', 'subject']]
 
+    def get_average_rating(self):
+        return self.reviews.aggregate(models.Avg('rating'))['rating__avg']
+
     def __str__(self) -> str:
         return f'{self.owner} - {self.subject}'
 
@@ -95,29 +101,6 @@ class Application(models.Model):
         return f'{self.applicant} - {self.advert}'
 
 
-class Lesson(models.Model):
-    class Status(models.TextChoices):
-        UPCOMING = 'UPCOMING'
-        FINISHED = 'FINISHED'
-
-    application = models.ForeignKey(
-        Application,
-        on_delete=models.CASCADE,
-        related_name='lessons'
-    )
-    description = models.CharField(max_length=100)
-    status = models.CharField(
-        max_length=10,
-        choices=Status.choices,
-        default=Status.UPCOMING
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self) -> str:
-        return f'{self.application} - {self.description}'
-
-
 class Review(models.Model):
     advert = models.ForeignKey(
         Advert,
@@ -143,22 +126,6 @@ class Review(models.Model):
         return f'{self.reviewer} - {self.advert}'
 
 
-class Complaint(models.Model):
-    advert = models.ForeignKey(
-        Advert,
-        on_delete=models.CASCADE,
-        related_name='complaints'
-    )
-    complainant = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='complaints'
-    )
-    description = models.CharField(max_length=1000, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-
 class Subject(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -175,19 +142,5 @@ class Subject(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
     def __str__(self):
         return self.title
-
-
-class Material(models.Model):
-    subjects = models.ManyToManyField(Subject, related_name='materials')
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
-    completers = models.ManyToManyField(
-        User,
-        blank=True,
-        related_name='completions'
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)

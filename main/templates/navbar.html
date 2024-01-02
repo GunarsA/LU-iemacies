@@ -1,18 +1,21 @@
-<nav>
-    <ul>
-        <li><a href="/">Home</a></li>
-        {% if user.is_authenticated %}
-        <li><a href="{% url 'chats' %}">Chats</a></li>
-        {% endif %}
-        <li><a href="{% url 'subjects' %}">Subjects</a></li>
-        <li><a href="{% url 'adverts' %}">Adverts</a></li>
-        
-        {% if request.user.is_authenticated %}
-        <li>{{user.username}}</li>
-        <li><a href="{% url 'logout' %}">Logout</a></a></li>    
-        {% else %}
-        <li><a href="{% url 'login' %}">Login</a></li>
-        <li><a href="{% url 'register' %}">Register</a></li>
-        {% endif %}
-    </ul>
+<nav class="bg-indigo-400">
+    <div class="container flex justify-between p-5 mx-auto">
+        <ul class="flex justify-between space-x-4">
+            <li><a href="/" class="text-white font-bold hover:underline">Home</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{% url 'chats' %}" class="text-white hover:underline">Chats</a></li>
+            {% endif %}
+            <li><a href="{% url 'subjects' %}" class="text-white hover:underline">Subjects</a></li>
+            <li><a href="{% url 'adverts' %}" class="text-white hover:underline">Adverts</a></li>
+        </ul>
+        <ul class="flex justify-between space-x-4">
+            {% if request.user.is_authenticated %}
+            <li> <a href="{% url 'profile_detail' user.id %}" class="text-white italic hover:underline">{{user.username}} </a></li>
+            <li><a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a></li>
+            {% else %}
+            <li><a href="{% url 'login' %}" class="text-white hover:underline">Login</a></li>
+            <li><a href="{% url 'register' %}" class="text-white hover:underline">Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
 </nav>

@@ -1,26 +1,17 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 from django.forms.models import BaseModelForm
-from django.http import HttpResponse
-
+from django.http import HttpResponse, Http404
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views import generic
 
-from main.models import Profile, Chat, Advert, Application, Lesson, Review, Subject, Material
-
 from main.forms import AdvertForm, ApplicationForm
-
-from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
-
-from django.contrib.auth.models import User
-
-from django.contrib.auth.forms import UserCreationForm
-
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-
-from django.http import Http404
-
-from django.urls import reverse
+from main.models import Profile, Chat, Advert, Application, Review, Subject
 
 
 def loginPage(request):
@@ -36,6 +27,7 @@ def loginPage(request):
             user = User.objects.get(username=username)
         except:
             messages.error(request, 'User does not exist')
+            return render(request, 'main/login_register.html')
 
         user = authenticate(request, username=username, password=password)
 
@@ -73,6 +65,63 @@ def registerPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('home')
+
+
+def profileDetailView(request, pk):
+    if not User.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    profile = User.objects.get(id=pk).profile
+
+    return render(request, 'main/profile_detail.html', {'profile': profile})
+
+
+@login_required(login_url='login')
+def profileUpdateView(request, pk):
+    if not User.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    if request.user != User.objects.get(id=pk):
+        messages.error(request, 'You don\'t have access to this profile!')
+        return redirect('home')
+
+    profile = User.objects.get(id=pk).profile
+
+    if request.method == 'POST':
+        profile.user.username = request.POST.get('username')
+        profile.user.save()
+        profile.description = request.POST.get('description')
+        profile.save()
+        return redirect(reverse('profile_detail', args=[pk]))
+
+    return render(request, 'main/profile_form.html', {'profile': profile})
+
+
+@login_required(login_url='login')
+def chatListView(request):
+    chats = request.user.profile.reachable_users()
+    print(chats[0])
+    return render(request, 'main/chat_list.html', {'chats': chats})
+
+
+@login_required(login_url='login')
+def chatDetailView(request, pk):
+    if not request.user.profile.reachable_users().filter(id=pk).exists():
+        messages.error(request, 'You don\'t have access to this chat!')
+        return redirect('home')
+
+    chat = Chat.objects.filter(sender=request.user, receiver=pk) | Chat.objects.filter(
+        sender=pk, receiver=request.user)
+    receiver = User.objects.get(id=pk)
+
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        if message:
+            chat = Chat.objects.create(
+                sender=request.user, receiver=User.objects.get(id=pk), message=message)
+            return redirect(reverse('chat_detail', args=[pk]))
+
+    return render(request, 'main/chat_detail.html', {'chat': chat, 'receiver': receiver})
 
 
 class AdvertListView(generic.ListView):
@@ -164,29 +213,51 @@ def viewApplication(request, pk):
 
 
 @login_required(login_url='login')
-def chatListView(request):
-    chats = request.user.profile.reachable_users()
-    print(chats[0])
-    return render(request, 'main/chat_list.html', {'chats': chats})
+def createReview(request, pk):
+    if not Application.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    if Review.objects.filter(advert=pk, reviewer=request.user).exists():
+        messages.error(request, 'You have already reviewed this advert')
+        return redirect(reverse('review_detail', args=[Review.objects.get(advert=pk, reviewer=request.user).id]))
+
+    advert = Advert.objects.get(id=pk)
+
+    if request.method == 'POST':
+        Review.objects.create(advert=advert, reviewer=request.user,
+                              rating=request.POST.get('rating'), review=request.POST.get('review'))
+        return redirect(reverse('advert_detail', args=[pk]))
+
+    return render(request, 'main/review_form.html', {'advert': advert})
+
+
+def viewReview(request, pk):
+    if not Review.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    review = Review.objects.get(id=pk)
+
+    return render(request, 'main/review_detail.html', {'review': review})
 
 
 @login_required(login_url='login')
-def chatDetailView(request, pk):
-    if not request.user.profile.reachable_users().filter(id=pk).exists():
-        messages.error(request, 'You don\'t have access to this chat!')
+def updateReview(request, pk):
+    if not Review.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    if request.user != Review.objects.get(id=pk).reviewer:
+        messages.error(request, 'You don\'t have access to this review!')
         return redirect('home')
 
-    chat = Chat.objects.filter(sender=request.user, receiver=pk) | Chat.objects.filter(
-        sender=pk, receiver=request.user)
-    receiver = User.objects.get(id=pk)
+    review = Review.objects.get(id=pk)
 
     if request.method == 'POST':
-        message = request.POST.get('message')
-        if message:
-            chat = Chat.objects.create(sender=request.user, receiver=User.objects.get(id=pk), message=message)
-            return redirect(reverse('chat_detail', args=[pk]))
+        review.rating = request.POST.get('rating')
+        review.review = request.POST.get('review')
+        review.save()
+        return redirect(reverse('review_detail', args=[pk]))
 
-    return render(request, 'main/chat_detail.html', {'chat': chat, 'receiver': receiver})
+    return render(request, 'main/review_form.html', {'review': review})
 
 
 class SubjectListView(generic.ListView):
@@ -197,35 +268,3 @@ class SubjectListView(generic.ListView):
 class SubjectDetailView(generic.DetailView):
     model = Subject
     template_name = 'main/subject_detail.html'
-
-
-def profileDetailView(request, pk):
-    if not User.objects.filter(id=pk).exists():
-        raise Http404("This page does not exist :(")
-
-    profile = User.objects.get(id=pk).profile
-
-    return render(request, 'main/profile_detail.html', {'profile': profile})
-
-
-@login_required(login_url='login')
-def profileUpdateView(request, pk):
-    if not User.objects.filter(id=pk).exists():
-        raise Http404("This page does not exist :(")
-    
-    if request.user != User.objects.get(id=pk):
-        messages.error(request, 'You don\'t have access to this profile!')
-        return redirect('home')
-
-    profile = User.objects.get(id=pk).profile
-
-    if request.method == 'POST':
-        profile.user.username = request.POST.get('username')
-        profile.user.save()
-        profile.description = request.POST.get('description')
-        profile.save()
-        return redirect(reverse('profile_detail', args=[pk]))
-
-    return render(request, 'main/profile_form.html', {'profile': profile})
-
-

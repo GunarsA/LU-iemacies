@@ -11,7 +11,7 @@
 
     <p>Created: {{review.created_at}}</p>
 
-    {% if user.is_authenticated && user = review.reviewer%}
+    {% if user.is_authenticated and user == review.reviewer%}
     <a href="{% url 'review_update' review.id %}">Edit</a>
     {% endif %}
 </div>
