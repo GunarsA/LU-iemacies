@@ -10,18 +10,21 @@ class Profile(models.Model):
 
     description = models.TextField(blank=True)
 
-    def reachable_users(self):
-        """
-        Returns a queryset of users who are reachable by the current user.
-        Reachable users include teachers, students, and users with whom the current user has existing chats.
-        """
-        teachers = set(Application.objects.filter(
-            applicant=self.user).values_list('advert__owner', flat=True))
-        students = set(Application.objects.filter(
-            advert__owner=self.user).values_list('applicant', flat=True))
-        existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(
-            Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
-        return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
+    def reachable_users(self) -> models.QuerySet[User]:
+            """
+            Returns a queryset of users who are reachable by the current user.
+            This includes teachers who have received applications from the current user,
+            students who have applied to advertisements owned by the current user,
+            and users with whom the current user has existing chats.
+            The current user is excluded from the queryset.
+            """
+            teachers = set(Application.objects.filter(
+                applicant=self.user).values_list('advert__owner', flat=True))
+            students = set(Application.objects.filter(
+                advert__owner=self.user).values_list('applicant', flat=True))
+            existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(
+                Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
+            return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
 
     def __str__(self) -> str:
         return self.user.username
@@ -62,7 +65,13 @@ class Advert(models.Model):
     class Meta:
         unique_together = [['owner', 'subject']]
 
-    def get_average_rating(self):
+    def get_average_rating(self) -> float:
+        """
+        Calculates and returns the average rating of the reviews for this object.
+
+        Returns:
+            float: The average rating.
+        """
         return self.reviews.aggregate(models.Avg('rating'))['rating__avg']
 
     def __str__(self) -> str:
