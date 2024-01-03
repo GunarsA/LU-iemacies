@@ -20,7 +20,9 @@ The app's development was focused on learning the Django framework and its featu
 5. Create a .env file using the .env.example file
 6. Run the migrations `python manage.py migrate`
 7. Seed the database `python manage.py loaddata fixtures.json`
-8. Run the server `python manage.py runserver`
+8. Install the **django-tailwind** dependencies `python manage.py tailwind install`
+9. Run the **django-tailwind** development server `python manage.py tailwind start`
+10. Run the server `python manage.py runserver`
 
 ## Usage
 

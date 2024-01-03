@@ -45,7 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'main.apps.MainConfig',
+
+    'tailwind',
+    'theme',
 ]
+
+TAILWIND_APP_NAME = 'theme'
+NPM_BIN_PATH = os.environ.get('NPM_BIN_PATH', '/usr/bin/npm')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
