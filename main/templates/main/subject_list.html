@@ -2,27 +2,27 @@
 
 {% block content %}
 
-<div class="container">
-    <h1>Subjects</h1>
+<div class="container p-5">
+    <h1 class="text-2xl font-bold mb-4">Subjects</h1>
 
-    <table>
+    <table class="w-full border-collapse">
         <thead>
             <tr>
-                <th>Subject</th>
-                <th>Description</th>
-                <th>Advert count</th>
+                <th class="py-2 px-4 bg-gray-200">Subject</th>
+                <th class="py-2 px-4 bg-gray-200">Description</th>
+                <th class="py-2 px-4 bg-gray-200">Advert count</th>
             </tr>
         </thead>
         <tbody>
             {% for subject in subject_list %}
             <tr>
-                <td><a href="{% url 'subject_detail' subject.id %}">{{ subject.title }}</a></td>
-                <td>{{ subject.description }}</td>
-                <td>{{ subject.adverts.all.count }}</td>
+                <td class="py-2 px-4 border hover:underline"><a href="{% url 'subject_detail' subject.id %}">{{ subject.title }}</a></td>
+                <td class="py-2 px-4 border">{{ subject.description }}</td>
+                <td class="py-2 px-4 border">{{ subject.adverts.all.count }}</td>
             </tr>
             {% endfor %}
+        </tbody>
     </table>
-
 </div>
 
 {% endblock %}

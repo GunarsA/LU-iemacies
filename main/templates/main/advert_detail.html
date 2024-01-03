@@ -2,38 +2,35 @@
 
 {% block content %}
 
-<div class="container">
-
-    <h1>{{ advert.owner }} - {{advert.subject}}</h1>
+<div class="container mx-auto mt-5 p-10 unded shadow-lg">
+    <h1 class="text-2xl font-bold">{{ advert.owner }}'s <em>{{advert.subject}}</em> advert</h1>
 
     {% if request.user.is_authenticated and request.user == advert.owner %}
-    <a href="{% url 'advert_update' advert.id %}">Update advert</a>
+    <a href="{% url 'advert_update' advert.id %}" class="text-blue-500">Update advert</a>
     {% endif %}
 
-    <h2>Average Rating</h2>
+    <h2 class="text-xl font-bold mt-4">Average Rating</h2>
     <p>{{ advert.get_average_rating|default:"No reviews"}}</p>
 
-    <h2>Description</h2>
+    <h2 class="text-xl font-bold mt-4">Description</h2>
     <p>{{ advert.description }}</p>
 
-    <h2>Applications</h2>
-
-    {% if user.is_authenticated and user == advert.owner %}
-    {% for application in advert.applications.all %}
-    <p><a href="{% url 'application_detail' application.id %}">{{ application.applicant }} - {{ application.description }}</a></p>
-    {% endfor %}
-    {% endif %}
-
-    <a href="{% url 'application_create' advert.id %}">Create application</a>
-
-    <h2>Reviews</h2>
-
+    <h2 class="text-xl font-bold mt-4">Reviews</h2>
     {% for review in advert.reviews.all %}
-    <p><a href="{% url 'review_detail' review.id %}">{{ review.reviewer }} - {{ review.review }}</a></p>
+    <p><a href="{% url 'review_detail' review.id %}" class="text-blue-500">{{ review.reviewer }} - {{ review.review }}</a></p>
     {% endfor %}
 
-    <a href="{% url 'review_create' advert.id %}">Create review</a>
+    <h2 class="text-xl font-bold mt-4">Applications</h2>
+    {% for application in advert.applications.all %}
+    <p><a href="{% url 'application_detail' application.id %}" class="text-blue-500">
+            {{ application.applicant }} - {{ application.description}}</a></p>
+    {% endfor %}
 
+    {% if user.is_authenticated %}
+    <a href="{% url 'application_create' advert.id %}" class="text-blue-500">Create application</a>
+
+    <a href="{% url 'review_create' advert.id %}" class="text-blue-500">Create review</a>
+    {% endif %}
 </div>
 
 {% endblock %}

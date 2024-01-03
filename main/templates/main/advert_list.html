@@ -2,14 +2,33 @@
 
 {% block content %}
 
-<div class="container">
-    <h1>Adverts</h1>
-    <a href="{% url 'advert_create' %}">Create advert</a>
-    <ul>
-        {% for advert in advert_list %}
-        <li><a href="{% url 'advert_detail' advert.id %}">{{ advert.owner }} - {{advert.subject}}</a></li>
-        {% endfor %}
-    </ul>
+<div class="container mx-auto pt-5">
+    <div class="flex justify-between">
+        <h1 class="text-3xl font-bold">Adverts</h1>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <a href="{% url 'advert_create' %}" class="text-white">Create advert</a>
+        </button>
+    </div>
+    <table class="mt-4 w-full table-auto border border-collapse">
+        <thead class="bg-gray-200">
+            <tr>
+                <th class="py-2 px-4 border">Owner</th>
+                <th class="py-2 px-4 border">Subject</th>
+                <th class="py-2 px-4 border">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for advert in advert_list %}
+            <tr>
+                <td class="py-2 px-4 border">
+                    <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">{{ advert.owner }}</a>
+                </td>
+                <td class="py-2 px-4 border">{{ advert.subject }}</td>
+                <td class="py-2 px-4 border">{{ advert.description }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 </div>
 

@@ -2,35 +2,48 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container mx-auto p-4">
 
-    <h1>{{ application.applicant }} - {{application.advert.subject.title}}</h1>
+    <h1 class="text-3xl font-bold mb-4">{{ application.applicant }} - {{ application.advert.subject.title }}</h1>
 
-    <h2>Description</h2>
-    <p>{{ application.description }}</p>
+    <div class="mb-8">
+        <h2 class="text-xl font-bold mb-2">Description</h2>
+        <p>{{ application.description }}</p>
+    </div>
 
-    <h2>Status</h2>
-    <p>{{ application.status }}</p>
+    <div class="mb-8">
+        <h2 class="text-xl font-bold mb-2">Status</h2>
+        <p class="text-yellow-300 font-bold">{{ application.status }}</p>
+    </div>
 
-    {% if user == application.advert.owner%}
-    <form method="post">
-        {% csrf_token %}
-        {% if application.status.lower == 'pending' %}
-        <button type="submit" name="status" value="ongoing">Accept</button>
-        <button type="submit" name="status" value="finished">Reject</button>
-        {% elif application.status.lower == 'finished' %}
-        <button type="submit" name="status" value="ongoing">Reopen</button>
-        {% endif %}
-    </form>
+    {% if user == application.advert.owner %}
+        <form method="post" class="mb-8">
+            {% csrf_token %}
+            {% if application.status.lower == 'pending' %}
+                <button type="submit" name="status" value="ongoing" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+                    Accept
+                </button>
+                <button type="submit" name="status" value="finished" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:border-red-700 ml-2">
+                    Reject
+                </button>
+            {% elif application.status.lower == 'finished' %}
+                <button type="submit" name="status" value="ongoing" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:border-green-700">
+                    Reopen
+                </button>
+            {% endif %}
+        </form>
     {% endif %}
 
     {% if application.status.lower == 'ongoing' %}
-    <form method="post">
-        {% csrf_token %}
-        <button type="submit" name="status" value="finished">End</button>
-    </form>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" name="status" value="finished" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:border-red-700">
+                End
+            </button>
+        </form>
     {% endif %}
 
 </div>
+
 
 {% endblock %}

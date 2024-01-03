@@ -1,16 +1,30 @@
-<nav class="bg-indigo-400">
-    <div class="container flex justify-between p-5 mx-auto">
+{% url 'home' as home_url %}
+{% url 'chats' as chats_url %}
+{% url 'subjects' as subjects_url %}
+{% url 'adverts' as adverts_url %}
+
+<nav class="bg-blue-950">
+    <div class="container flex justify-between p-5 mx-auto mb-5">
         <ul class="flex justify-between space-x-4">
-            <li><a href="/" class="text-white font-bold hover:underline">Home</a></li>
+            <li><a href="{% url 'home' %}"
+                    class="text-white font-bold {% if request.path == home_url %}underline{% else %}hover:underline{% endif %}">Home</a>
+            </li>
             {% if user.is_authenticated %}
-            <li><a href="{% url 'chats' %}" class="text-white hover:underline">Chats</a></li>
+            <li><a href="{% url 'chats' %}"
+                    class="text-white {% if request.path == chats_url %}underline{% else %}hover:underline{% endif %}">Chats</a>
+            </li>
             {% endif %}
-            <li><a href="{% url 'subjects' %}" class="text-white hover:underline">Subjects</a></li>
-            <li><a href="{% url 'adverts' %}" class="text-white hover:underline">Adverts</a></li>
+            <li><a href="{% url 'subjects' %}"
+                    class="text-white {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Subjects</a>
+            </li>
+            <li><a href="{% url 'adverts' %}"
+                    class="text-white {% if request.path == adverts_url %}underline{% else %}hover:underline{% endif %}">Adverts</a>
+            </li>
         </ul>
         <ul class="flex justify-between space-x-4">
             {% if request.user.is_authenticated %}
-            <li> <a href="{% url 'profile_detail' user.id %}" class="text-white italic hover:underline">{{user.username}} </a></li>
+            <li> <a href="{% url 'profile_detail' user.id %}"
+                    class="text-white italic hover:underline">{{user.username}} </a></li>
             <li><a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a></li>
             {% else %}
             <li><a href="{% url 'login' %}" class="text-white hover:underline">Login</a></li>

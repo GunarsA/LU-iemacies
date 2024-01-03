@@ -33,6 +33,7 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
+            messages.success(request, 'Logged in as ' + username)
             return redirect('home')
         else:
             messages.error(request, 'Username OR password does not exit')
@@ -99,8 +100,8 @@ def profileUpdateView(request, pk):
 
 @login_required(login_url='login')
 def chatListView(request):
-    chats = request.user.profile.reachable_users()
-    print(chats[0])
+    # chats = request.user.profile.reachable_users()
+    chats = User.objects.all()
     return render(request, 'main/chat_list.html', {'chats': chats})
 
 
@@ -150,7 +151,7 @@ class AdvertCreateView(generic.CreateView):
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
-    def form_invalid(self, form: BaseModelForm) -> HttpResponse:
+    def form_invalid(self, form: BaseModelForm) -> HttpResponse:    
         return super().form_invalid(form)
 
 
@@ -188,7 +189,7 @@ def createApplication(request, pk):
         else:
             messages.error(request, 'An error occurred during application')
 
-    return render(request, 'main/application_form.html', {'form': form})
+    return render(request, 'main/application_form.html', {'form': form, 'advert': advert})
 
 
 @login_required(login_url='login')
@@ -214,7 +215,7 @@ def viewApplication(request, pk):
 
 @login_required(login_url='login')
 def createReview(request, pk):
-    if not Application.objects.filter(id=pk).exists():
+    if not Advert.objects.filter(id=pk).exists():
         raise Http404("This page does not exist :(")
 
     if Review.objects.filter(advert=pk, reviewer=request.user).exists():

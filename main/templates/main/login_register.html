@@ -2,36 +2,80 @@
 
 {% block content %}
 
+<div class="container mt-5 mx-auto">
 
-{% if page == 'login' %}
-<div>
-    <form method="POST" action="">
+    {% if page == 'login' %}
+
+    <form method="POST" class="max-w-md mx-auto">
         {% csrf_token %}
 
-        <label>Username:</label>
-        <input type="text" name="username" placeholder="Enter Username" />
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">Username:</label>
+            <input type="text" name="username" id="username" placeholder="Enter Username"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+        </div>
 
-        <label>Password:</label>
-        <input type="password" name="password" placeholder="Enter Password" />
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password:</label>
+            <input type="password" name="password" id="password" placeholder="Enter Password"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+        </div>
 
-        <input type="submit" value="Login" />
+        <button type="submit"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+            Login
+        </button>
     </form>
 
-    <p>havent signed up yet?</p>
-    <a href="{% url 'register' %}">Sign up</a>
-</div>
+    <p class="mt-4 text-center text-gray-700">Haven't registered yet?</p>
+    <a href="{% url 'register' %}"
+        class="block text-center text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-700 mt-2">
+        Register
+    </a>
 
-{% else %}
 
-<div>
-    <form method="POST" action="">
+    {% else %}
+
+    <form method="POST" class="max-w-md mx-auto">
         {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Register" />
+
+        <div class="mb-4">
+            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
+            <input type="text" name="username" id="username" placeholder="Enter Username"
+                value="{{form.username.value|default:''}}"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            <div class="text-red-500 text-sm">{{form.username.errors}}</div>
+        </div>
+
+        <div class="mb-4">
+            <label for="password1" class="block text-gray-700 text-sm font-bold mb-2">Password:</label>
+            <input type="password" name="password1" id="password1" placeholder="Enter Password"
+                value="{{form.password1.value|default:''}}"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            <div class="text-red-500 text-sm">{{form.password1.errors}}</div>
+        </div>
+
+        <div class="mb-4">
+            <label for="password2" class="block text-gray-700 text-sm font-bold mb-2">Confirm Password:</label>
+            <input type="password" name="password2" id="password2" placeholder="Confirm Password"
+                value="{{form.password2.value|default:''}}"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            <div class="text-red-500 text-sm">{{form.password2.errors}}</div>
+        </div>
+
+        <button type="submit"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+            Register
+        </button>
     </form>
-    <p>Already signed up yet?</p>
-    <a href="{% url 'login' %}">Login</a>
+
+    <p class="mt-4 text-center text-gray-700">Already registered?</p>
+    <a href="{% url 'login' %}"
+        class="block text-center text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-700 mt-2">Login</a>
+
+
+    {% endif %}
+
 </div>
-{% endif %}
 
 {% endblock content %}

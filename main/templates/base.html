@@ -14,20 +14,34 @@
 
     {% include 'navbar.html' %}
 
-    <hr>
-
     {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-    <hr>
+    <div class="container mx-auto rounded p-5 shadow-lg">
+        <ul class="mt-4 list-disc list-inside">
+            {% for message in messages %}
+            {% if message.tags == 'success' %}
+            <li class="text-green-500">{{ message }}</li>
+            {% elif message.tags == 'error' %}
+            <li class="text-red-500">{{ message }}</li>
+            {% elif message.tags == 'warning' %}
+            <li class="text-yellow-500">{{ message }}</li>
+            {% elif message.tags == 'info' %}
+            <li class="text-blue-500">{{ message }}</li>
+            {% elif message.tags == 'debug' %}
+            <li class="text-gray-500">{{ message }}</li>
+            {% else %}
+            <li>{{ message }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
     {% endif %}
 
-    {% block content %}
+    <div class="container mx-auto p-5 rounded-lg shadow-lg ">
 
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
+
+    </div>
 
 </body>
 
