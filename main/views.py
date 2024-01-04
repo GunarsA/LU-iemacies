@@ -172,7 +172,7 @@ class AdvertDetailView(generic.DetailView):
 def createApplication(request, pk):
     if Application.objects.filter(advert=pk, applicant=request.user).exists():
         messages.error(request, 'You have already applied for this advert')
-        return redirect('home')
+        return redirect(reverse('application_update', args=[Application.objects.get(advert=pk, applicant=request.user).id]))
 
     form = ApplicationForm()
 
@@ -189,7 +189,7 @@ def createApplication(request, pk):
         else:
             messages.error(request, 'An error occurred during application')
 
-    return render(request, 'main/application_form.html', {'form': form, 'advert': advert})
+    return render(request, 'main/application_form.html', {'form': form, 'advert': advert, 'page': 'create'})
 
 
 @login_required(login_url='login')
@@ -211,6 +211,25 @@ def viewApplication(request, pk):
         return redirect(reverse('application_detail', args=[pk]))
 
     return render(request, 'main/application_detail.html', {'application': application})
+
+
+@login_required(login_url='login')
+def updateApplication(request, pk):
+    if not Application.objects.filter(id=pk).exists():
+        raise Http404("This page does not exist :(")
+
+    if request.user != Application.objects.get(id=pk).applicant:
+        messages.error(request, 'You don\'t have access to this application!')
+        return redirect('home')
+
+    application = Application.objects.get(id=pk)
+
+    if request.method == 'POST':
+        application.description = request.POST.get('description')
+        application.save()
+        return redirect(reverse('application_detail', args=[pk]))
+
+    return render(request, 'main/application_form.html', {'application': application, 'page': 'update'})
 
 
 @login_required(login_url='login')

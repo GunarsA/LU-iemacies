@@ -2,30 +2,36 @@
 
 {% block content %}
 
-
 <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">Chat with <em>{{ receiver.username }}</em></h1>
+    <h1 class="text-3xl font-bold mb-4">
+        Chat with 
+        <a href="{% url 'profile_detail' receiver.id %}" class="text-blue-500 hover:underline">
+            {{ receiver.username }}
+        </a>
+    </h1>
+    
 
     <div class="bg-gray-100 p-4 rounded-lg mb-4">
         <ul class="divide-y divide-gray-200">
             {% for message in chat %}
-                <li class="py-2 {% if message.sender.username == user.username %} text-right {% endif %}">
-                    <span class="text-gray-500">{{ message.sender.username }} ({{ message.created_at|date:"F d, Y H:i" }}):</span>
-                    <p class="mt-1">{{ message.message }}</p>
-                </li>
+            <li class="py-2 {% if message.sender.username == user.username %} text-right {% endif %}">
+                <span class="text-gray-500">{{ message.sender.username }}
+                    ({{ message.created_at|date:"F d, Y H:i"}}):</span>
+                <p class="mt-1">{{ message.message }}</p>
+            </li>
             {% endfor %}
         </ul>
     </div>
 
     <form method="post" class="flex items-center space-x-4">
         {% csrf_token %}
-        <input type="text" name="message" class="flex-grow p-2 border rounded-md focus:outline-none focus:border-blue-500">
-        <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+        <input type="text" name="message"
+            class="flex-grow p-2 border rounded-md focus:outline-none focus:border-blue-500">
+        <button type="submit"
+            class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
             Send
         </button>
     </form>
 </div>
-
-
 
 {% endblock %}

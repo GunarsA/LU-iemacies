@@ -1,12 +1,28 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container">
-    <ul>
-        {% for user in chats %}
-        <li><a href="{% url 'chat_detail' user.id %}">{{ user.username }}</a></li>
-        {% endfor %}
-    </ul>
+<div class="container mx-auto">
+    <table class="min-w-full bg-white border border-gray-200">
+        <thead>
+            <tr>
+                <th class="py-2 px-4 border-b">Username</th>
+                <th class="py-2 px-4 border-b">Message Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in chats %}
+                <tr class="hover:bg-gray-100">
+                    <td class="py-2 px-4 border-b">
+                        <a href="{% url 'chat_detail' user.id %}" class="text-blue-500 hover:underline">{{ user.username }}</a>
+                    </td>
+                    <td class="py-2 px-4 border-b">
+                        <!-- Add any actions or additional information here -->
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
+
 
 {% endblock %}

@@ -50,7 +50,7 @@ class Chat(models.Model):
 
 
 class Advert(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='adverts')
     subject = models.ForeignKey(
         'Subject',
         on_delete=models.CASCADE,

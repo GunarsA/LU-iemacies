@@ -1,12 +1,19 @@
 {% extends 'base.html' %}
 
-{% block content %}	
+{% block content %}
 
 <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">{{ profile.user.username }}'s Profile</h1>
+    <div class="flex justify-between">
+        <h1 class="text-3xl font-bold mb-4">{{ profile.user.username }}'s Profile</h1>
+        {% if user.is_authenticated and user == profile.user %}
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-5 rounded">
+            <a href="{% url 'profile_update' profile.user.id %}" class="text-white">Edit</a>
+        </button>
+        {% endif %}
+    </div>
 
     {% if profile.user.groups.all.0.name == 'teacher' %}
-        <p class="text-green-500 font-semibold mb-2">Teacher</p>
+    <p class="text-green-500 font-semibold mb-2">Teacher</p>
     {% endif %}
 
     <div class="mb-4">
@@ -14,10 +21,32 @@
         <p>{{ profile.description }}</p>
     </div>
 
-    {% if user.is_authenticated and user == profile.user %}
-        <a href="{% url 'profile_update' profile.user.id %}" class="text-blue-500 hover:text-blue-700">Edit</a>
+    {% if user.is_authenticated and user == profile.user and profile.user.groups.all.0.name == 'teacher'%}
+    <div>
+        <h2 class="text-xl font-bold mb-2">Adverts</h2>
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="py-2 px-4 border-b">Subject</th>
+                    <th class="py-2 px-4 border-b">Description</th>
+                    <th class="py-2 px-4 border-b">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for advert in profile.user.adverts.all %}
+                <tr class="hover:bg-gray-50">
+                    <td class="py-2 px-4 border-b">
+                        <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">
+                            {{advert.subject.title }}</a>
+                    </td>
+                    <td class="py-2 px-4 border-b">{{ advert.description }}</td>
+                    <td class="py-2 px-4 border-b">{{ advert.is_active|yesno:'active,inactive' }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
     {% endif %}
 </div>
 
-    
 {% endblock %}

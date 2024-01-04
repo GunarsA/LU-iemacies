@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container mx-auto mt-5 p-10 unded shadow-lg">
+<div class="container mx-auto">
     <h1 class="text-2xl font-bold">{{ advert.owner }}'s <em>{{advert.subject}}</em> advert</h1>
 
     {% if request.user.is_authenticated and request.user == advert.owner %}

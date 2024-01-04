@@ -1,19 +1,54 @@
 # Iemacies.lv
 
-Roadmap learning platform in Django.
+Private teacher web application
 
 ## About
 
-The app's development was focused on learning the Django framework and its features. So the front end design is without any styling and is meant to be used only as example of the backend functionality.
+The app's development was focused on learning the Django framework and its features.
+
+## Features
+
+- User roles (student, teacher, admin)
+- Users can only modify their own data, for example, students can only edit their own applications
+
+### Guest
+
+- View subjects, teacher, adverts and reviews
+- Register and login
+
+### Logged in user
+
+- View and edit profile
+- Chat with related users (those with whom there is an open application)
+
+### Student
+
+- Create and edit applications
+- Create and edit reviews
+
+### Teacher
+
+- Create and edit adverts
+- Approve and reject applications
+
+### Admin
+
+- Create and edit subjects using **Django admin panel**
+- Give and remove teacher role using **Django admin panel**
 
 ## Requirements
 
-- Python 3.12
-- PostgreSQL 16
+- Python
+- PostgreSQL
+- Node.js
+- npm
 
 ## Installation (Tested on Windows 11)
 
 1. Setup the **postgresql** database
+   1. Install **postgresql**
+   2. Create a user
+   3. Create a database
 2. Clone the repository and navigate to the project folder
 3. Create a virtual environment `python -m venv venv`
 4. Install the dependencies `pip install -r requirements.txt`
@@ -28,6 +63,6 @@ The app's development was focused on learning the Django framework and its featu
 
 Web application is available at <http://localhost:8000/>
 
-Admin user can be created with `python manage.py createsuperuser`
-
 Admin panel is available at <http://localhost:8000/admin/>
+
+There are 3 users (student, teacher, admin) with the password **password** for each of them. You can login with any of them or create a new user.
