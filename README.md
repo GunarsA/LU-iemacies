@@ -50,14 +50,16 @@ The app's development was focused on learning the Django framework and its featu
    2. Create a user
    3. Create a database
 2. Clone the repository and navigate to the project folder
-3. Create a virtual environment `python -m venv venv`
-4. Install the dependencies `pip install -r requirements.txt`
-5. Create a .env file using the .env.example file
-6. Run the migrations `python manage.py migrate`
-7. Seed the database `python manage.py loaddata fixtures.json`
-8. Install the **django-tailwind** dependencies `python manage.py tailwind install`
-9. Run the **django-tailwind** development server `python manage.py tailwind start`
-10. Run the server `python manage.py runserver`
+3. Setup python virtual environment
+   1. Create the environment `python -m venv venv`
+   2. Activate the environment `venv\Scripts\activate`
+   3. Install the dependencies `pip install -r requirements.txt`
+4. Create a .env file using the .env.example file
+5. Run the migrations `python manage.py migrate`
+6. Seed the database `python manage.py loaddata fixtures.json`
+7. Install the **django-tailwind** dependencies `python manage.py tailwind install`
+8. Run the **django-tailwind** development server `python manage.py tailwind start`
+9. Run the server `python manage.py runserver`
 
 ## Usage
 
