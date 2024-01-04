@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<div class="container mx-auto mt-5 p-8 bg-white rounded shadow-lg">
-    <h1 class="text-3xl font-bold mb-2">{{ review.reviewer }}'s Review of {{ review.advert.owner }}'s {{ review.advert.subject.name }} Advert</h1>
+<div class="container mx-auto">
+    <h1 class="text-3xl font-bold mb-2">{{ review.reviewer }}'s Review of {{ review.advert.owner }}'s
+        {{ review.advert.subject.name }} Advert</h1>
 
     <p class="text-lg text-gray-600">Rating: {{ review.rating }}</p>
 
@@ -13,9 +14,9 @@
     <p class="mt-4 text-sm text-gray-500">Created: {{ review.created_at }}</p>
 
     {% if user.is_authenticated and user == review.reviewer %}
-        <a href="{% url 'review_update' review.id %}" class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">Edit</a>
+    <a href="{% url 'review_update' review.id %}"
+        class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">Edit</a>
     {% endif %}
 </div>
-
 
 {% endblock %}

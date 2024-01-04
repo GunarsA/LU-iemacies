@@ -24,33 +24,36 @@
     </div>
 
     {% if user == application.advert.owner %}
-        <form method="post" class="mb-8">
-            {% csrf_token %}
-            {% if application.status.lower == 'pending' %}
-                <button type="submit" name="status" value="ongoing" class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
-                    Accept
-                </button>
-                <button type="submit" name="status" value="finished" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:border-red-700 ml-2">
-                    Reject
-                </button>
-            {% elif application.status.lower == 'finished' %}
-                <button type="submit" name="status" value="ongoing" class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:border-green-700">
-                    Reopen
-                </button>
-            {% endif %}
-        </form>
+    <form method="post" class="mb-8">
+        {% csrf_token %}
+        {% if application.status.lower == 'pending' %}
+        <button type="submit" name="status" value="ongoing"
+            class="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+            Accept
+        </button>
+        <button type="submit" name="status" value="rejected"
+            class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:border-red-700 ml-2">
+            Reject
+        </button>
+        {% elif application.status.lower == 'finished' or application.status.lower == 'rejected'%}
+        <button type="submit" name="status" value="ongoing"
+            class="bg-green-500 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:border-green-700">
+            Reopen
+        </button>
+        {% endif %}
+    </form>
     {% endif %}
 
     {% if application.status.lower == 'ongoing' %}
-        <form method="post">
-            {% csrf_token %}
-            <button type="submit" name="status" value="finished" class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:border-red-700">
-                End
-            </button>
-        </form>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" name="status" value="finished"
+            class="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:border-red-700">
+            End
+        </button>
+    </form>
     {% endif %}
 
 </div>
-
 
 {% endblock %}

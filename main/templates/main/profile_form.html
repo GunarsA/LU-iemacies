@@ -3,30 +3,40 @@
 {% block content %}
 
 <div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-4">{{ profile.user.username }}'s Profile Update</h1>
+    <h1 class="text-3xl font-bold mb-4">Profile Update</h1>
 
     <form method="post" class="max-w-md mx-auto">
         {% csrf_token %}
 
         <div class="mb-4">
             <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username:</label>
-            <input type="text" id="username" name="username" value="{{ profile.user.username }}"
-                   class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            <input type="text" id="username" name="username" value="{{ user_form.username.value }}"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            <div class="text-red-500 text-sm">{{user_form.username.errors}}</div>
+        </div>
+
+        <div class="mb-4">
+            <label for="full_name" class="block text-gray-700 text-sm font-bold mb-2">Full name:</label>
+            <input type="text" id="full_name" name="full_name" value="{{ profile_form.full_name.value|default:'' }}"
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500">
+            <div class="text-red-500 text-sm">{{profile_form.full_name.errors}}</div>
         </div>
 
         <div class="mb-4">
             <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
             <textarea id="description" name="description"
-                      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                      rows="4">{{ profile.description }}</textarea>
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+                rows="4">{{ profile_form.description.value }}</textarea>
+            <div class="text-red-500 text-sm">{{profile_form.description.errors}}</div>
         </div>
 
+
+
         <button type="submit"
-                class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
-            Submit
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+            Update
         </button>
     </form>
 </div>
-
 
 {% endblock %}

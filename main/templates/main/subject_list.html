@@ -16,7 +16,8 @@
         <tbody>
             {% for subject in subject_list %}
             <tr>
-                <td class="py-2 px-4 border hover:underline"><a href="{% url 'subject_detail' subject.id %}">{{ subject.title }}</a></td>
+                <td class="py-2 px-4 border hover:underline"><a href="{% url 'subject_detail' subject.id %}">
+                        {{ subject.title }}</a></td>
                 <td class="py-2 px-4 border">{{ subject.description }}</td>
                 <td class="py-2 px-4 border">{{ subject.adverts.all.count }}</td>
             </tr>

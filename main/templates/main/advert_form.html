@@ -4,39 +4,45 @@
 
 <div class="container mx-auto p-4">
 
-    <h1 class="text-2xl font-bold mb-4">Create / Edit Advert</h1>
-
+    <h1 class="text-2xl font-bold mb-4">{{ page|capfirst }} Advert</h1>
 
     <form action="" method="post" class="max-w-lg mx-auto">
         {% csrf_token %}
 
         <div class="mb-4">
             <label for="subject" class="block text-gray-700 text-sm font-bold mb-2">Subject</label>
-            <select name="subject" id="subject" class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500">
+            <select name="subject" id="subject"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500">
                 <option value="">---------</option>
                 {% for option in form.fields.subject.queryset %}
-                <option value="{{ option.id }}" {% if form.subject.value|add:"0" == option.id|add:"0" %}selected{% endif %}>{{ option.title }}</option>
+                <option value="{{ option.id }}" {% if form.subject.value|add:'0' == option.id|add:'0' %}selected{%endif%}>
+                    {{ option.title }}
+                </option>
                 {% endfor %}
             </select>
-            {{ form.subject.errors }}
+            <div class="text-red-500 text-sm">{{form.subject.errors}}</div>
         </div>
 
         <div class="mb-4">
             <label for="id_description" class="block text-gray-700 text-sm font-bold mb-2">Description</label>
-            <textarea id="id_description" name="description" class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500">{{form.description.value|default:''}}</textarea>
-            {{ form.description.errors }}
+            <textarea id="id_description" name="description"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500">{{form.description.value|default:''}}</textarea>
+                <div class="text-red-500 text-sm">{{ form.description.errors }}</div>
         </div>
 
         <div class="mb-4">
             <label for="id_price" class="block text-gray-700 text-sm font-bold mb-2">Price</label>
-            <input id="id_price" type="text" name="price" class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500" value="{{form.price.value|default:''}}">
-            {{ form.price.errors }}
+            <input id="id_price" type="text" name="price"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:border-blue-500"
+                value="{{form.price.value|default:''}}">
+                <div class="text-red-500 text-sm">{{ form.price.errors }}</div>
         </div>
 
         <div class="mb-4">
             <label for="id_active" class="text-gray-700 text-sm font-bold mb-2">Is active</label>
-            <input id="id_active" type="checkbox" name="is_active" class="border rounded focus:outline-none focus:border-blue-500" {% if form.is_active %}checked{% endif %}>
-            {{ form.active.errors }}
+            <input id="id_active" type="checkbox" name="is_active"
+                class="border rounded focus:outline-none focus:border-blue-500" {% if form.is_active %}checked{%endif%}>
+                <div class="text-red-500 text-sm">{{ form.active.errors }}</div>
         </div>
 
         <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
@@ -45,6 +51,5 @@
     </form>
 
 </div>
-
 
 {% endblock %}

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container mx-auto mt-5 p-8 bg-white rounded shadow-lg">
+<div class="container mx-auto">
 
     <h1 class="text-2xl font-bold">{{ subject.title }}</h1>
 
@@ -11,7 +11,8 @@
 
     <h2 class="text-xl font-bold mt-4">Dependencies</h2>
     {% for subject in subject.sub_subjects.all %}
-    <p class="mt-2"><a href="{% url 'subject_detail' subject.id %}" class="text-blue-500 hover:underline">{{ subject.title }}</a></p>
+    <p class="mt-2"><a href="{% url 'subject_detail' subject.id %}" class="text-blue-500 hover:underline">
+            {{ subject.title }}</a></p>
     {% endfor %}
 
     <h2 class="text-xl font-bold mt-4">Adverts</h2>
@@ -26,7 +27,8 @@
             {% for advert in subject.adverts.all %}
             <tr>
                 <td class="py-2 px-4 border">
-                    <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">{{ advert.owner }}</a>
+                    <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">
+                        {{ advert.owner }}</a>
                 </td>
                 <td class="py-2 px-4 border">{{ advert.description }}</td>
             </tr>
@@ -35,7 +37,8 @@
     </table>
 
     {% if user.is_authenticated and user.groups.all.0.name == 'teacher' %}
-    <a href="{% url 'advert_create' subject.id %}" class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create Advert</a>
+    <a href="{% url 'advert_create' subject.id %}"
+        class="mt-4 inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create Advert</a>
     {% endif %}
 
 </div>

@@ -4,7 +4,8 @@
 
 <div class="container mx-auto p-10">
 
-    <h1 class="text-3xl font-bold mb-4">{{page|capfirst}} Application for <em>{{ advert|default:application.advert }}</em></h1>
+    <h1 class="text-3xl font-bold mb-4">{{page|capfirst}} Application for <em>
+            {{ advert_name }}</em></h1>
 
     <form method="post" class="max-w-md mx-auto ">
         {% csrf_token %}
@@ -12,16 +13,17 @@
         <div class="mb-4">
             <label for="description" class="block text-gray-700 text-sm font-bold mb-2">Description:</label>
             <textarea name="description" id="description"
-                      class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
-                      cols="30" rows="10">{{ application.description|default:'' }}</textarea>
+                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500" cols="30"
+                rows="10">{{ form.description.value }}</textarea>
+            <div class="text-red-500 text-sm">{{form.description.errors}}</div>
         </div>
 
-        <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
+        <button type="submit"
+            class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 focus:outline-none focus:border-blue-700">
             {{page|capfirst}}
         </button>
     </form>
 
 </div>
-
 
 {% endblock %}

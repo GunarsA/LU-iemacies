@@ -83,6 +83,7 @@ class Application(models.Model):
         PENDING = 'PENDING'
         ONGOING = 'ONGOING'
         FINISHED = 'FINISHED'
+        REJECTED = 'REJECTED'
 
     advert = models.ForeignKey(
         Advert,
