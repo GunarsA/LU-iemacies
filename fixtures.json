@@ -36,6 +36,42 @@
     }
   },
   {
+    "model": "main.profile",
+    "pk": 5,
+    "fields": {
+      "full_name": "Nino Nakano",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "user": 5
+    }
+  },
+  {
+    "model": "main.profile",
+    "pk": 6,
+    "fields": {
+      "full_name": "Truman Burbank",
+      "description": "good morning good evening and goodnight",
+      "user": 6
+    }
+  },
+  {
+    "model": "main.profile",
+    "pk": 7,
+    "fields": {
+      "full_name": "Sarah Connor",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "user": 7
+    }
+  },
+  {
+    "model": "main.profile",
+    "pk": 8,
+    "fields": {
+      "full_name": "Michael Scott",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      "user": 8
+    }
+  },
+  {
     "model": "main.chat",
     "pk": 1,
     "fields": {
@@ -44,6 +80,28 @@
       "updated_at": "2024-01-05T08:49:03.981Z",
       "sender": 3,
       "receiver": 2
+    }
+  },
+  {
+    "model": "main.chat",
+    "pk": 2,
+    "fields": {
+      "message": "hi",
+      "created_at": "2024-01-05T11:10:22.310Z",
+      "updated_at": "2024-01-05T11:10:22.310Z",
+      "sender": 2,
+      "receiver": 3
+    }
+  },
+  {
+    "model": "main.chat",
+    "pk": 3,
+    "fields": {
+      "message": "When wanna meet up",
+      "created_at": "2024-01-05T12:15:13.874Z",
+      "updated_at": "2024-01-05T12:15:13.874Z",
+      "sender": 2,
+      "receiver": 6
     }
   },
   {
@@ -86,6 +144,227 @@
     }
   },
   {
+    "model": "main.advert",
+    "pk": 4,
+    "fields": {
+      "description": "Will teach a lot about geo things",
+      "price": 3,
+      "is_active": true,
+      "created_at": "2024-01-05T11:25:56.761Z",
+      "updated_at": "2024-01-05T11:25:56.761Z",
+      "owner": 7,
+      "subject": 6
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 5,
+    "fields": {
+      "description": "Will be good",
+      "price": 3,
+      "is_active": true,
+      "created_at": "2024-01-05T11:26:16.433Z",
+      "updated_at": "2024-01-05T11:26:16.433Z",
+      "owner": 7,
+      "subject": 7
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 6,
+    "fields": {
+      "description": "Amazing",
+      "price": 3,
+      "is_active": true,
+      "created_at": "2024-01-05T11:26:29.664Z",
+      "updated_at": "2024-01-05T11:26:29.664Z",
+      "owner": 7,
+      "subject": 10
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 7,
+    "fields": {
+      "description": "Won't regret it!!",
+      "price": 4,
+      "is_active": true,
+      "created_at": "2024-01-05T11:26:44.104Z",
+      "updated_at": "2024-01-05T11:26:44.104Z",
+      "owner": 7,
+      "subject": 8
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 8,
+    "fields": {
+      "description": "Embark on a journey of discovery with our immersive exploration course.",
+      "price": 4,
+      "is_active": true,
+      "created_at": "2024-01-05T11:28:18.338Z",
+      "updated_at": "2024-01-05T11:28:18.338Z",
+      "owner": 7,
+      "subject": 3
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 9,
+    "fields": {
+      "description": "Experience the thrill of intellectual growth",
+      "price": 5,
+      "is_active": true,
+      "created_at": "2024-01-05T11:28:38.714Z",
+      "updated_at": "2024-01-05T11:28:38.714Z",
+      "owner": 7,
+      "subject": 4
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 10,
+    "fields": {
+      "description": "Will teach about learning machines",
+      "price": 3,
+      "is_active": true,
+      "created_at": "2024-01-05T11:34:00.907Z",
+      "updated_at": "2024-01-05T11:34:00.907Z",
+      "owner": 5,
+      "subject": 5
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 11,
+    "fields": {
+      "description": "i'm bit of a biologist myself",
+      "price": 3,
+      "is_active": true,
+      "created_at": "2024-01-05T11:34:15.447Z",
+      "updated_at": "2024-01-05T11:34:15.447Z",
+      "owner": 5,
+      "subject": 7
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 12,
+    "fields": {
+      "description": "Will be better than prof in university",
+      "price": 7,
+      "is_active": true,
+      "created_at": "2024-01-05T11:34:28.624Z",
+      "updated_at": "2024-01-05T11:34:28.624Z",
+      "owner": 5,
+      "subject": 1
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 13,
+    "fields": {
+      "description": "I actually experience physics every day",
+      "price": 12,
+      "is_active": true,
+      "created_at": "2024-01-05T11:34:43.013Z",
+      "updated_at": "2024-01-05T11:34:43.013Z",
+      "owner": 5,
+      "subject": 8
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 14,
+    "fields": {
+      "description": "I went to high school so i know",
+      "price": 4,
+      "is_active": true,
+      "created_at": "2024-01-05T11:35:00.328Z",
+      "updated_at": "2024-01-05T11:35:00.328Z",
+      "owner": 5,
+      "subject": 10
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 15,
+    "fields": {
+      "description": "Will make something interesting with you",
+      "price": 6,
+      "is_active": true,
+      "created_at": "2024-01-05T11:35:21.312Z",
+      "updated_at": "2024-01-05T11:35:21.312Z",
+      "owner": 5,
+      "subject": 9
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 16,
+    "fields": {
+      "description": "Bit of geography master",
+      "price": 4,
+      "is_active": true,
+      "created_at": "2024-01-05T12:09:59.966Z",
+      "updated_at": "2024-01-05T12:10:40.424Z",
+      "owner": 2,
+      "subject": 6
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 17,
+    "fields": {
+      "description": "best bio",
+      "price": 7,
+      "is_active": true,
+      "created_at": "2024-01-05T12:10:53.712Z",
+      "updated_at": "2024-01-05T12:10:53.712Z",
+      "owner": 2,
+      "subject": 7
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 18,
+    "fields": {
+      "description": "will be good",
+      "price": 6,
+      "is_active": true,
+      "created_at": "2024-01-05T12:11:06.586Z",
+      "updated_at": "2024-01-05T12:11:06.586Z",
+      "owner": 2,
+      "subject": 5
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 19,
+    "fields": {
+      "description": "will be best",
+      "price": 7,
+      "is_active": true,
+      "created_at": "2024-01-05T12:11:19.838Z",
+      "updated_at": "2024-01-05T12:11:19.838Z",
+      "owner": 2,
+      "subject": 3
+    }
+  },
+  {
+    "model": "main.advert",
+    "pk": 20,
+    "fields": {
+      "description": "i'm good",
+      "price": 5,
+      "is_active": true,
+      "created_at": "2024-01-05T12:11:31.041Z",
+      "updated_at": "2024-01-05T12:11:31.041Z",
+      "owner": 2,
+      "subject": 8
+    }
+  },
+  {
     "model": "main.application",
     "pk": 1,
     "fields": {
@@ -98,15 +377,255 @@
     }
   },
   {
+    "model": "main.application",
+    "pk": 2,
+    "fields": {
+      "description": "I'll be really good to teach!",
+      "status": "REJECTED",
+      "created_at": "2024-01-05T11:29:41.443Z",
+      "updated_at": "2024-01-05T12:14:22.831Z",
+      "advert": 1,
+      "applicant": 8
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 3,
+    "fields": {
+      "description": "Take me please",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:31:28.602Z",
+      "updated_at": "2024-01-05T11:31:28.602Z",
+      "advert": 4,
+      "applicant": 8
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 4,
+    "fields": {
+      "description": "❤️❤️❤️",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:31:53.682Z",
+      "updated_at": "2024-01-05T11:31:53.682Z",
+      "advert": 2,
+      "applicant": 8
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 5,
+    "fields": {
+      "description": "Let me in",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:32:10.813Z",
+      "updated_at": "2024-01-05T11:32:10.813Z",
+      "advert": 7,
+      "applicant": 8
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 6,
+    "fields": {
+      "description": "Pretty please",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:32:27.692Z",
+      "updated_at": "2024-01-05T11:32:27.692Z",
+      "advert": 8,
+      "applicant": 8
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 7,
+    "fields": {
+      "description": "really want to know how to get out of this place",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:37:06.876Z",
+      "updated_at": "2024-01-05T11:37:06.876Z",
+      "advert": 11,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 8,
+    "fields": {
+      "description": "Cannot pass smotrovs kd3 need help",
+      "status": "ONGOING",
+      "created_at": "2024-01-05T11:38:00.323Z",
+      "updated_at": "2024-01-05T12:14:52.936Z",
+      "advert": 1,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 9,
+    "fields": {
+      "description": "Want to learn how to cook",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:39:02.172Z",
+      "updated_at": "2024-01-05T11:39:02.172Z",
+      "advert": 2,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 10,
+    "fields": {
+      "description": "take mei",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:39:34.461Z",
+      "updated_at": "2024-01-05T11:39:34.461Z",
+      "advert": 5,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 11,
+    "fields": {
+      "description": "take me please",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:40:05.722Z",
+      "updated_at": "2024-01-05T11:40:05.722Z",
+      "advert": 13,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 12,
+    "fields": {
+      "description": "want to become scientist",
+      "status": "PENDING",
+      "created_at": "2024-01-05T11:40:46.093Z",
+      "updated_at": "2024-01-05T11:40:46.093Z",
+      "advert": 7,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 13,
+    "fields": {
+      "description": "Take me",
+      "status": "PENDING",
+      "created_at": "2024-01-05T12:13:25.486Z",
+      "updated_at": "2024-01-05T12:13:25.486Z",
+      "advert": 17,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 14,
+    "fields": {
+      "description": "Pretty please",
+      "status": "PENDING",
+      "created_at": "2024-01-05T12:13:36.152Z",
+      "updated_at": "2024-01-05T12:13:36.152Z",
+      "advert": 19,
+      "applicant": 6
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 15,
+    "fields": {
+      "description": "Please take me",
+      "status": "PENDING",
+      "created_at": "2024-01-05T12:15:47.801Z",
+      "updated_at": "2024-01-05T12:15:47.801Z",
+      "advert": 3,
+      "applicant": 3
+    }
+  },
+  {
+    "model": "main.application",
+    "pk": 16,
+    "fields": {
+      "description": "Want to learn this",
+      "status": "PENDING",
+      "created_at": "2024-01-05T12:16:00.327Z",
+      "updated_at": "2024-01-05T12:16:00.327Z",
+      "advert": 5,
+      "applicant": 3
+    }
+  },
+  {
     "model": "main.review",
     "pk": 1,
     "fields": {
       "review": "This was the best course ever!!",
       "rating": 9,
       "created_at": "2024-01-05T08:50:22.859Z",
-      "updated_at": "2024-01-05T08:50:22.859Z",
+      "updated_at": "2024-01-05T10:57:48.761Z",
       "advert": 1,
       "reviewer": 3
+    }
+  },
+  {
+    "model": "main.review",
+    "pk": 2,
+    "fields": {
+      "review": "This was the absolute best",
+      "rating": 7,
+      "created_at": "2024-01-05T11:39:17.956Z",
+      "updated_at": "2024-01-05T11:39:17.956Z",
+      "advert": 2,
+      "reviewer": 6
+    }
+  },
+  {
+    "model": "main.review",
+    "pk": 3,
+    "fields": {
+      "review": "horrible won't recomend",
+      "rating": 3,
+      "created_at": "2024-01-05T11:39:46.046Z",
+      "updated_at": "2024-01-05T11:39:46.046Z",
+      "advert": 5,
+      "reviewer": 6
+    }
+  },
+  {
+    "model": "main.review",
+    "pk": 4,
+    "fields": {
+      "review": "",
+      "rating": 5,
+      "created_at": "2024-01-05T11:40:27.405Z",
+      "updated_at": "2024-01-05T11:40:27.405Z",
+      "advert": 13,
+      "reviewer": 6
+    }
+  },
+  {
+    "model": "main.review",
+    "pk": 5,
+    "fields": {
+      "review": "",
+      "rating": 7,
+      "created_at": "2024-01-05T11:40:54.010Z",
+      "updated_at": "2024-01-05T11:40:54.010Z",
+      "advert": 7,
+      "reviewer": 6
+    }
+  },
+  {
+    "model": "main.review",
+    "pk": 6,
+    "fields": {
+      "review": "Decent",
+      "rating": 7,
+      "created_at": "2024-01-05T12:13:56.348Z",
+      "updated_at": "2024-01-05T12:13:56.348Z",
+      "advert": 17,
+      "reviewer": 6
     }
   },
   {
@@ -242,7 +761,7 @@
     "pk": 2,
     "fields": {
       "password": "pbkdf2_sha256$720000$I2pdxbdh4Dl8HszbjiFO69$zTi1RfbSwSArAPfs9uWE1DesxsDJ8NDTksSMmuxM6QA=",
-      "last_login": "2024-01-05T08:53:17.251Z",
+      "last_login": "2024-01-05T12:14:10.736Z",
       "is_superuser": false,
       "username": "teacher",
       "first_name": "",
@@ -260,7 +779,7 @@
     "pk": 3,
     "fields": {
       "password": "pbkdf2_sha256$720000$xWYgIHOVX6nEIexnM8tKbF$s5ct4dxk9lJykl4U9DTfKRg7JbLNRAxs3b2nJY5yJSU=",
-      "last_login": "2024-01-05T09:09:07.908Z",
+      "last_login": "2024-01-05T12:15:28.986Z",
       "is_superuser": false,
       "username": "student",
       "first_name": "",
@@ -278,7 +797,7 @@
     "pk": 4,
     "fields": {
       "password": "pbkdf2_sha256$720000$cUClZHfFSbORKQO0ZyCn7H$+KtKon3aIyeSYFiEvrofADfjf0i/tPooY2dIsM/Lbzc=",
-      "last_login": "2024-01-05T09:06:22Z",
+      "last_login": "2024-01-05T12:12:23.468Z",
       "is_superuser": false,
       "username": "yosciencewiz",
       "first_name": "",
@@ -288,6 +807,78 @@
       "is_active": true,
       "date_joined": "2024-01-05T09:06:22Z",
       "groups": [1],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$hBZSkozZYbcIcrMHjpVeAp$kgSGduX+DwkgzUL65ARjQEAAAnuXnUGsNp5T6nd9LY4=",
+      "last_login": "2024-01-05T11:33:19.131Z",
+      "is_superuser": false,
+      "username": "sapphirevortex",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-05T11:20:15Z",
+      "groups": [1],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$KIc9c5odRLd3ZhBmIuH9x8$0s0tI1pNJ1K8Kjwrt/m+Rajtj4tUA/CRtMLqDGFAmyk=",
+      "last_login": "2024-01-05T12:13:02.458Z",
+      "is_superuser": false,
+      "username": "emberecho",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-05T11:20:42.033Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$NinCaHidVLshEWACrkKtwz$Zm4iR1L3SLId8D4O/boUTRlfpKSOCCcril/mYpNXDkA=",
+      "last_login": "2024-01-05T11:25:12.040Z",
+      "is_superuser": false,
+      "username": "zenithspark",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-05T11:20:58Z",
+      "groups": [1],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 8,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$TBqG6v1omzC2quNRw020A7$7+jLEolQqC83yMWZi+/XUUWEcEL4VuG2KA9yYfTUBcM=",
+      "last_login": "2024-01-05T11:29:01.038Z",
+      "is_superuser": false,
+      "username": "silvercascade",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2024-01-05T11:21:15.400Z",
+      "groups": [],
       "user_permissions": []
     }
   },

@@ -4,32 +4,32 @@
 {% url 'advert_list' as adverts_url %}
 
 <nav class="bg-blue-950">
-    <div class="container flex justify-between p-5 mx-auto mb-5">
-        <ul class="flex justify-between space-x-4">
-            <li><a href="{{ home_url }}"
-                    class="text-white font-bold {% if request.path == home_url %}underline{% else %}hover:underline{% endif %}">Home</a>
-            </li>
-            {% if user.is_authenticated %}
-            <li><a href="{{ chats_url }}"
-                    class="text-white {% if request.path == chats_url %}underline{% else %}hover:underline{% endif %}">Chats</a>
-            </li>
-            {% endif %}
-            <li><a href="{{ subjects_url }}"
-                    class="text-white {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Subjects</a>
-            </li>
-            <li><a href="{{ adverts_url }}"
-                    class="text-white {% if request.path == adverts_url %}underline{% else %}hover:underline{% endif %}">Adverts</a>
-            </li>
-        </ul>
-        <ul class="flex justify-between space-x-4">
-            {% if request.user.is_authenticated %}
-            <li> <a href="{% url 'profile_detail' user.id %}"
-                    class="text-white italic hover:underline">{{user.username}} </a></li>
-            <li><a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a></li>
-            {% else %}
-            <li><a href="{% url 'login' %}" class="text-white hover:underline">Login</a></li>
-            <li><a href="{% url 'register' %}" class="text-white hover:underline">Register</a></li>
-            {% endif %}
-        </ul>
-    </div>
+        <div class="container flex justify-between p-5 mx-auto mb-5">
+                <ul class="flex justify-between space-x-4">
+                        <li><a href="{{ home_url }}"
+                                        class="text-white font-bold {% if request.path == home_url %}underline{% else %}hover:underline{% endif %}">Home</a>
+                        </li>
+                        {% if user.is_authenticated %}
+                        <li><a href="{{ chats_url }}"
+                                        class="text-white {% if request.path == chats_url %}underline{% else %}hover:underline{% endif %}">Chats</a>
+                        </li>
+                        {% endif %}
+                        <li><a href="{{ subjects_url }}"
+                                        class="text-white {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Subjects</a>
+                        </li>
+                        <li><a href="{{ adverts_url }}"
+                                        class="text-white {% if request.path == adverts_url %}underline{% else %}hover:underline{% endif %}">Adverts</a>
+                        </li>
+                </ul>
+                <ul class="flex justify-between space-x-4">
+                        {% if request.user.is_authenticated %}
+                        <li> <a href="{% url 'profile_detail' user.id %}"
+                                        class="text-white italic hover:underline">{{user.username}} </a></li>
+                        <li><a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}" class="text-white hover:underline">Login</a></li>
+                        <li><a href="{% url 'register' %}" class="text-white hover:underline">Register</a></li>
+                        {% endif %}
+                </ul>
+        </div>
 </nav>

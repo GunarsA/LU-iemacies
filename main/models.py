@@ -12,18 +12,36 @@ class Profile(models.Model):
     def reachable_users(self) -> models.QuerySet[User]:
         """
         Returns a queryset of users who are reachable by the current user.
-        This includes teachers who have received applications from the current user,
-        students who have applied to advertisements owned by the current user,
-        and users with whom the current user has existing chats.
-        The current user is excluded from the queryset.
+
+        The reachable users include both the teachers who have ongoing applications
+        from the current user and the students who have ongoing applications to the
+        advertisements owned by the current user.
+
+        Returns:
+            A queryset of User objects representing the reachable users.
         """
         teachers = set(Application.objects.filter(
             applicant=self.user, status='ONGOING').values_list('advert__owner', flat=True))
         students = set(Application.objects.filter(
             advert__owner=self.user, status='ONGOING').values_list('applicant', flat=True))
+        return User.objects.filter(id__in=teachers | students | {self.user.id})
+
+    def viewable_users(self) -> models.QuerySet[User]:
+        """
+        Returns a queryset of users that can be viewed by the current user.
+
+        This method retrieves the set of reachable users and existing chats
+        involving the current user. It then filters the User queryset based on
+        the union of these sets.
+
+        Returns:
+            A queryset of User objects that can be viewed by the current user.
+        """
+        application_relations = set(
+            self.reachable_users().values_list('id', flat=True))
         existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(
             Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
-        return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
+        return User.objects.filter(id__in=application_relations | existing_chats)
 
     def __str__(self) -> str:
         return self.user.username

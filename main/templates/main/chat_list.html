@@ -3,27 +3,30 @@
 {% block content %}
 
 <div class="container mx-auto">
-    <table class="min-w-full bg-white border border-gray-200">
+    <table class="min-w-full bg-white border border-blue-500 mt-4">
         <thead>
             <tr>
-                <th class="py-2 px-4 border-b">Username</th>
-                <th class="py-2 px-4 border-b">Message Count</th>
+                <th class="border py-2 px-4">Username</th>
+                <th class="border py-2 px-4">Actions</th>
             </tr>
         </thead>
         <tbody>
             {% for user in chats %}
             <tr class="hover:bg-gray-100">
-                <td class="py-2 px-4 border-b">
-                    <a href="{% url 'chat_detail' user.id %}" class="text-blue-500 hover:underline">
+                <td class="border py-2 px-4">
+                    <a href="{% url 'profile_detail' user.id %}" class="text-blue-500 hover:underline">
                         {{ user.username }}</a>
                 </td>
-                <td class="py-2 px-4 border-b">
-                    <!-- Add any actions or additional information here -->
+                <td class="border py-2 px-4">
+                    <a href="{% url 'chat_detail' user.id %}" class="text-blue-500 hover:underline">
+                        View</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+
+
 
 {% endblock %}

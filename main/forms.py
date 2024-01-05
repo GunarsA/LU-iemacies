@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.forms import UserChangeForm
 from django.contrib.auth.models import User
@@ -33,3 +34,7 @@ class ReviewForm(ModelForm):
     class Meta:
         model = Review
         fields = ['rating', 'review']
+
+
+class SubjectSearchForm(forms.Form):
+    query = forms.CharField(max_length=100, required=False)

@@ -3,18 +3,21 @@
 {% block content %}
 
 <div class="container mx-auto p-4">
-    <div class="flex justify-between">
-        <h1 class="text-3xl font-bold mb-4">{{ profile.user.username }}'s Profile</h1>
+    <div class="flex justify-between mb-4">
+        <span class="flex items-center">
+            <h1 class="text-3xl font-bold">{{ profile.user.username }}'s Profile</h1>
+            {% if profile.user.groups.all.0.name == 'teacher' %}
+            <p class="border border-green-500 rounded-md text-green-500 font-semibold px-2 ml-4">Teacher</p>
+            {% else %}
+            <p class="border border-blue-500 rounded-md text-blue-500 font-semibold px-2 ml-4">Student</p>
+            {% endif %}
+        </span>
         {% if user.is_authenticated and user == profile.user %}
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold px-5 rounded">
             <a href="{% url 'profile_update' profile.user.id %}" class="text-white">Edit</a>
         </button>
         {% endif %}
     </div>
-
-    {% if profile.user.groups.all.0.name == 'teacher' %}
-    <p class="text-green-500 font-semibold mb-2">Teacher</p>
-    {% endif %}
 
     <div class="mb-4">
         <h2 class="text-xl font-bold mb-2">Name</h2>
@@ -26,8 +29,9 @@
         <p>{{ profile.description }}</p>
     </div>
 
-    {% if user.is_authenticated and user == profile.user and profile.user.groups.all.0.name == 'teacher'%}
-    <div>
+    {% if user.is_authenticated and user == profile.user%}
+    {% if profile.user.groups.all.0.name == 'teacher' %}
+    <div class="mb-5">
         <h2 class="text-xl font-bold mb-2">Adverts</h2>
         <table class="min-w-full bg-white border border-gray-200">
             <thead>
@@ -35,22 +39,90 @@
                     <th class="py-2 px-4 border-b">Subject</th>
                     <th class="py-2 px-4 border-b">Description</th>
                     <th class="py-2 px-4 border-b">Status</th>
+                    <th class="py-2 px-4 border-b">Action</th>
                 </tr>
             </thead>
             <tbody>
                 {% for advert in profile.user.adverts.all %}
                 <tr class="hover:bg-gray-50">
-                    <td class="py-2 px-4 border-b">
-                        <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">
-                            {{advert.subject.title }}</a>
+                    <td class="py-2 px-4 border">
+                        <a href="{% url 'subject_detail' advert.subject.id %}" class="text-blue-500 hover:underline">
+                            {{advert.subject }}</a>
                     </td>
-                    <td class="py-2 px-4 border-b">{{ advert.description }}</td>
-                    <td class="py-2 px-4 border-b">{{ advert.is_active|yesno:'active,inactive' }}</td>
+                    <td class="py-2 px-4 border">{{ advert.description }}</td>
+                    <td class="py-2 px-4 border">{{ advert.is_active|yesno:'active,inactive' }}</td>
+                    <td class="py-2 px-4 border">
+                        <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">
+                            View</a>
+                    </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
+
+    {% else %}
+
+    <div class="mb-5">
+        <h2 class="text-xl font-bold mb-2">Reviews</h2>
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="py-2 px-4 border-b">Advert</th>
+                    <th class="py-2 px-4 border-b">Rating</th>
+                    <th class="py-2 px-4 border-b">Review</th>
+                    <th class="py-2 px-4 border-b">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for review in profile.user.reviews.all %}
+                <tr class="hover:bg-gray-50">
+                    <td class="py-2 px-4 border">
+                        <a href="{% url 'advert_detail' review.advert.id %}" class="text-blue-500 hover:underline">
+                            {{ review.advert }}</a>
+                    </td>
+                    <td class="py-2 px-4 border">{{ review.rating }}</td>
+                    <td class="py-2 px-4 border">{{ review.review }}</td>
+                    <td class="py-2 px-4 border">
+                        <a href="{% url 'review_detail' review.id %}" class="text-blue-500 hover:underline">
+                            View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mb-5">
+        <h2 class="text-xl font-bold mb-2">Applications</h2>
+        <table class="min-w-full bg-white border border-gray-200">
+            <thead>
+                <tr class="bg-gray-100">
+                    <th class="py-2 px-4 border-b">Advert</th>
+                    <th class="py-2 px-4 border-b">Status</th>
+                    <th class="py-2 px-4 border-b">Description</th>
+                    <th class="py-2 px-4 border-b">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in profile.user.applications.all %}
+                <tr class="hover:bg-gray-50">
+                    <td class="py-2 px-4 border">
+                        <a href="{% url 'advert_detail' application.advert.id %}" class="text-blue-500 hover:underline">
+                            {{ application.advert }}</a>
+                    </td>
+                    <td class="py-2 px-4 border">{{ application.status }}</td>
+                    <td class="py-2 px-4 border">{{ application.description }}</td>
+                    <td class="py-2 px-4 border">
+                        <a href="{% url 'application_detail' application.id %}" class="text-blue-500 hover:underline">
+                            View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
     {% endif %}
 </div>
 

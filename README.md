@@ -1,11 +1,10 @@
-# Iemacies.lv
+# Iemacies
 
-Private teacher web application
+Private teacher search platform
 
 ## About
 
-The app's development was focused on learning the Django framework and its features.
-
+The app's development was focused on learning the Django framework and its features. Design was added using **django-tailwind**.
 ## Features
 
 - User roles (student, teacher, admin)
@@ -24,7 +23,7 @@ The app's development was focused on learning the Django framework and its featu
 ### Student
 
 - Create and edit applications
-- Create and edit reviews
+- Create and edit reviews only for finished applications
 
 ### Teacher
 
@@ -73,3 +72,41 @@ There are 3 users (student, teacher, admin) with the password **password** for e
 
 - To save dependencies `pip freeze > requirements.txt`
 - To save database state to fixture file `python -Xutf8 manage.py dumpdata main auth.user auth.group -o  fixtures_new.json`
+
+## Screenshots
+
+### Student's profile detail page
+
+![Student's profile detail page](screenshots/profile_detail_student.png)
+
+### Teacher's profile detail page
+
+![Teacher's profile detail page](screenshots/profile_detail_teacher.png)
+
+### Chat detail page
+
+![Chat detail page](screenshots/chat_detail.png)
+
+### Subject list page
+
+![Subject list page](screenshots/subject_list.png)
+
+### Subject detail page
+
+![Subject details page](screenshots/subject_detail.png)
+
+### Advert list page
+
+![Advert list page](screenshots/advert_list.png)
+
+### Student's advert detail page
+
+![Student's advert detail page](screenshots/advert_detail_student.png)
+
+### Teacher's advert detail page
+
+![Teacher's advert detail page](screenshots/advert_detail_teacher.png)
+
+### Advert create page
+
+![Advert create page](screenshots/advert_create.png)
