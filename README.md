@@ -5,6 +5,7 @@ Private teacher search platform
 ## About
 
 The app's development was focused on learning the Django framework and its features. Design was added using **django-tailwind**.
+
 ## Features
 
 - User roles (student, teacher, admin)
@@ -38,27 +39,27 @@ The app's development was focused on learning the Django framework and its featu
 ## Requirements
 
 - Python
-- PostgreSQL
+- PostgreSQL (optional)
 - Node.js
 - npm
 
 ## Installation (Tested on Windows 11)
 
-1. Setup the **postgresql** database
-   1. Install **postgresql**
-   2. Create a user
-   3. Create a database
+1. Setup the database (optional, you can use the default **sqlite** database)
+   1. Install and setup **postgresql**
+   2. Create a database
+   3. Create a `.env` file using the `.env.example`
+   4. Modify the `DATABASES` section in `settings.py`
 2. Clone the repository and navigate to the project folder
-3. Setup python virtual environment
-   1. Create the environment `python -m venv venv`
-   2. Activate the environment `venv\Scripts\activate`
-   3. Install the dependencies `pip install -r requirements.txt`
-4. Create a .env file using the .env.example file
-5. Run the migrations `python manage.py migrate`
-6. Seed the database `python manage.py loaddata fixtures.json`
-7. Install the **django-tailwind** dependencies `python manage.py tailwind install`
-8. Run the **django-tailwind** development server `python manage.py tailwind start`
-9. Run the server `python manage.py runserver`
+3. Setup python environment
+   1. Create the virtual environment `python -m venv venv`
+   2. Activate the **venv** `venv\Scripts\activate`
+   3. Install the **pip** dependencies `pip install -r requirements.txt`
+4. Run the database migrations `python manage.py migrate`
+5. Seed the database using fixtures `python manage.py loaddata fixtures.json`
+6. Install the **django-tailwind** dependencies `python manage.py tailwind install`
+7. Run the **django-tailwind** development server `python manage.py tailwind start`
+8. Run the **django** development server `python manage.py runserver`
 
 ## Usage
 
@@ -70,8 +71,8 @@ There are 3 users (student, teacher, admin) with the password **password** for e
 
 ## Commands for development
 
-- To save dependencies `pip freeze > requirements.txt`
-- To save database state to fixture file `python -Xutf8 manage.py dumpdata main auth.user auth.group -o  fixtures_new.json`
+- To save the **pip** dependencies `pip freeze > requirements.txt`
+- To save database data to fixture file `python -Xutf8 manage.py dumpdata main auth.user auth.group -o  fixtures_new.json`
 
 ## Screenshots
 
@@ -110,3 +111,7 @@ There are 3 users (student, teacher, admin) with the password **password** for e
 ### Advert create page
 
 ![Advert create page](screenshots/advert_create.png)
+
+## Database diagram
+
+![Database diagram](screenshots/database_diagram.png)

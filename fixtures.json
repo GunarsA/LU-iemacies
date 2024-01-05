@@ -105,6 +105,17 @@
     }
   },
   {
+    "model": "main.chat",
+    "pk": 4,
+    "fields": {
+      "message": "When we cooking?",
+      "created_at": "2024-01-05T15:43:15.957Z",
+      "updated_at": "2024-01-05T15:43:15.957Z",
+      "sender": 4,
+      "receiver": 3
+    }
+  },
+  {
     "model": "main.advert",
     "pk": 1,
     "fields": {
@@ -537,9 +548,9 @@
     "pk": 15,
     "fields": {
       "description": "Please take me",
-      "status": "PENDING",
+      "status": "ONGOING",
       "created_at": "2024-01-05T12:15:47.801Z",
-      "updated_at": "2024-01-05T12:15:47.801Z",
+      "updated_at": "2024-01-05T15:43:00.925Z",
       "advert": 3,
       "applicant": 3
     }
@@ -779,7 +790,7 @@
     "pk": 3,
     "fields": {
       "password": "pbkdf2_sha256$720000$xWYgIHOVX6nEIexnM8tKbF$s5ct4dxk9lJykl4U9DTfKRg7JbLNRAxs3b2nJY5yJSU=",
-      "last_login": "2024-01-05T12:15:28.986Z",
+      "last_login": "2024-01-05T15:25:05.117Z",
       "is_superuser": false,
       "username": "student",
       "first_name": "",
@@ -797,7 +808,7 @@
     "pk": 4,
     "fields": {
       "password": "pbkdf2_sha256$720000$cUClZHfFSbORKQO0ZyCn7H$+KtKon3aIyeSYFiEvrofADfjf0i/tPooY2dIsM/Lbzc=",
-      "last_login": "2024-01-05T12:12:23.468Z",
+      "last_login": "2024-01-05T15:42:50.180Z",
       "is_superuser": false,
       "username": "yosciencewiz",
       "first_name": "",
