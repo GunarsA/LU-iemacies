@@ -68,3 +68,8 @@ Web application is available at <http://localhost:8000/>
 Admin panel is available at <http://localhost:8000/admin/>
 
 There are 3 users (student, teacher, admin) with the password **password** for each of them. You can login with any of them or create a new user.
+
+## Commands for development
+
+- To save dependencies `pip freeze > requirements.txt`
+- To save database state to fixture file `python -Xutf8 manage.py dumpdata main auth.user auth.group -o  fixtures_new.json`

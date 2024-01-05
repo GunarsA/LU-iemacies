@@ -4,33 +4,36 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-
     full_name = models.CharField(max_length=100, blank=True)
-
     description = models.TextField(blank=True)
 
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+
     def reachable_users(self) -> models.QuerySet[User]:
-            """
-            Returns a queryset of users who are reachable by the current user.
-            This includes teachers who have received applications from the current user,
-            students who have applied to advertisements owned by the current user,
-            and users with whom the current user has existing chats.
-            The current user is excluded from the queryset.
-            """
-            teachers = set(Application.objects.filter(
-                applicant=self.user).values_list('advert__owner', flat=True))
-            students = set(Application.objects.filter(
-                advert__owner=self.user).values_list('applicant', flat=True))
-            existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(
-                Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
-            return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
+        """
+        Returns a queryset of users who are reachable by the current user.
+        This includes teachers who have received applications from the current user,
+        students who have applied to advertisements owned by the current user,
+        and users with whom the current user has existing chats.
+        The current user is excluded from the queryset.
+        """
+        teachers = set(Application.objects.filter(
+            applicant=self.user, status='ONGOING').values_list('advert__owner', flat=True))
+        students = set(Application.objects.filter(
+            advert__owner=self.user, status='ONGOING').values_list('applicant', flat=True))
+        existing_chats = set(Chat.objects.filter(sender=self.user).values_list('receiver', flat=True)) | set(
+            Chat.objects.filter(receiver=self.user).values_list('sender', flat=True))
+        return User.objects.filter(id__in=teachers | students | existing_chats).exclude(id=self.user.id)
 
     def __str__(self) -> str:
         return self.user.username
 
 
 class Chat(models.Model):
+    message = models.CharField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     sender = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -41,29 +44,28 @@ class Chat(models.Model):
         on_delete=models.CASCADE,
         related_name='receiver'
     )
-    message = models.CharField(max_length=1000)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return f'{self.sender} -> {self.receiver}'
 
 
 class Advert(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='adverts')
-    subject = models.ForeignKey(
-        'Subject',
-        on_delete=models.CASCADE,
-        related_name='adverts'
-    )
     description = models.TextField(blank=True)
     price = models.IntegerField()
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    class Meta:
-        unique_together = [['owner', 'subject']]
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='adverts'
+    )
+    subject = models.ForeignKey(
+        'Subject',
+        on_delete=models.CASCADE,
+        related_name='adverts'
+    )
 
     def get_average_rating(self) -> float:
         """
@@ -77,6 +79,9 @@ class Advert(models.Model):
     def __str__(self) -> str:
         return f'{self.owner} - {self.subject}'
 
+    class Meta:
+        unique_together = [['owner', 'subject']]
+
 
 class Application(models.Model):
     class Status(models.TextChoices):
@@ -84,6 +89,15 @@ class Application(models.Model):
         ONGOING = 'ONGOING'
         FINISHED = 'FINISHED'
         REJECTED = 'REJECTED'
+
+    description = models.CharField(max_length=1000)
+    status = models.CharField(
+        max_length=10,
+        choices=Status.choices,
+        default=Status.PENDING
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     advert = models.ForeignKey(
         Advert,
@@ -95,14 +109,6 @@ class Application(models.Model):
         on_delete=models.CASCADE,
         related_name='applications'
     )
-    description = models.CharField(max_length=1000)
-    status = models.CharField(
-        max_length=10,
-        choices=Status.choices,
-        default=Status.PENDING
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = [['advert', 'applicant']]
@@ -112,6 +118,13 @@ class Application(models.Model):
 
 
 class Review(models.Model):
+    review = models.CharField(max_length=1000, blank=True)
+    rating = models.IntegerField(
+        validators=[MinValueValidator(1), MaxValueValidator(10)]
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     advert = models.ForeignKey(
         Advert,
         on_delete=models.CASCADE,
@@ -122,12 +135,6 @@ class Review(models.Model):
         on_delete=models.CASCADE,
         related_name='reviews'
     )
-    review = models.CharField(max_length=1000, blank=True)
-    rating = models.IntegerField(
-        validators=[MinValueValidator(1), MaxValueValidator(10)]
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = [['advert', 'reviewer']]
@@ -139,18 +146,14 @@ class Review(models.Model):
 class Subject(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     sub_subjects = models.ManyToManyField(
         'Subject',
         blank=True,
         related_name='sup_subjects'
     )
-    pursuers = models.ManyToManyField(
-        User,
-        blank=True,
-        related_name='goals'
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
