@@ -215,7 +215,7 @@ def chatDetail(request: HttpRequest, pk: int) -> HttpResponse:
         return redirect('home')
 
     chat = Chat.objects.filter(sender=request.user, receiver=pk) | Chat.objects.filter(
-        sender=pk, receiver=request.user)
+        sender=pk, receiver=request.user).order_by('created_at')
     receiver = User.objects.get(id=pk)
 
     if request.method == 'POST':

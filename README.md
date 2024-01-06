@@ -73,7 +73,7 @@ The app's development was focused on learning the Django framework and its featu
 5. Seed the database using fixtures `python manage.py loaddata fixtures.json`
 6. Install the **django-tailwind** dependencies `python manage.py tailwind install`
 7. Run the **django-tailwind** development server `python manage.py tailwind start`
-8. Run the **django** development server `python manage.py runserver`
+8. Run the **django** development server `python manage.py runserver 0.0.0.0:8000`
 
 ## Usage
 
