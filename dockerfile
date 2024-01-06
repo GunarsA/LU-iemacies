@@ -1,10 +1,6 @@
-FROM python:3.12
+FROM python:3.12-alpine
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        nodejs \
-        npm \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --update --no-cache npm=10.2.5-r0
 
 WORKDIR /usr/src/app
 

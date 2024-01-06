@@ -41,8 +41,9 @@ The app's development was focused on learning the Django framework and its featu
 ### Using **Docker**
 
 1. Clone the repository and navigate to the project folder
-2. Create the container `docker create --name iemacies -p 8000:8000`
-3. Start the container `docker start iemacies`
+2. Build the image `docker build -t iemacies .`
+3. Create the container `docker create --name iemacies -p 8000:8000 iemacies`
+4. Start the container `docker start iemacies -i`
 
 #### Notes
 
