@@ -54,7 +54,6 @@ The app's development was focused on learning the Django framework and its featu
 #### Requirements
 
 - Python
-- Node.js
 - npm
 - PostgreSQL (optional)
 
