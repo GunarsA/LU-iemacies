@@ -32,7 +32,7 @@ SECRET_KEY = 'django-insecure-+$zhi^mabc6ibu1k6-^+843&2$dx)=eo2p)#l-5_=6-(aqi2w^
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_TRUSTED_ORIGINS = ['https://iemacies.lv']
 
 # Application definition
 
