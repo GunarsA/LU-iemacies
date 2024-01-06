@@ -36,16 +36,30 @@ The app's development was focused on learning the Django framework and its featu
 - Create and edit subjects using **Django admin panel**
 - Give and remove teacher role using **Django admin panel**
 
-## Requirements
+## Local deployment instructions
+
+### Using **Docker**
+
+1. Clone the repository and navigate to the project folder
+2. Create the container `docker create --name iemacies -p 8000:8000`
+3. Start the container `docker start iemacies`
+
+#### Notes
+
+- The database is stored in the container, so it will be lost after the container is deleted
+
+### Using python **venv** *(Tested on Windows 11)*
+
+#### Requirements
 
 - Python
-- PostgreSQL (optional)
 - Node.js
 - npm
+- PostgreSQL (optional)
 
-## Installation (Tested on Windows 11)
+#### Steps
 
-1. Setup the database (optional, you can use the default **sqlite** database)
+1. Setup the database (optional, will use **sqlite** by default)
    1. Install and setup **postgresql**
    2. Create a database
    3. Create a `.env` file using the `.env.example`
@@ -63,9 +77,9 @@ The app's development was focused on learning the Django framework and its featu
 
 ## Usage
 
-Web application is available at <http://localhost:8000/>
+Web application is available at <http://127.0.0.1:8000/>
 
-Admin panel is available at <http://localhost:8000/admin/>
+Admin panel is available at <http://127.0.0.1:8000/admin/>
 
 There are 3 users (student, teacher, admin) with the password **password** for each of them. You can login with any of them or create a new user.
 
