@@ -2,7 +2,53 @@
 
 Private teacher search platform
 
+## Author
+
+Gunārs Ābeltiņš (ga22008)
+
+## GitHub repository
+
+<https://github.com/GunarsA/LU-iemacies>
+
+## Table of contents
+
+- [Iemacies](#iemacies)
+  - [Author](#author)
+  - [GitHub repository](#github-repository)
+  - [Table of contents](#table-of-contents)
+  - [About](#about)
+  - [Technologies](#technologies)
+  - [Features](#features)
+    - [Guest](#guest)
+    - [Logged in user](#logged-in-user)
+    - [Student](#student)
+    - [Teacher](#teacher)
+    - [Admin](#admin)
+  - [Local deployment instructions](#local-deployment-instructions)
+    - [Using **Docker**](#using-docker)
+      - [Notes](#notes)
+    - [Using python **venv** _(Tested on Windows 11)_](#using-python-venv-tested-on-windows-11)
+      - [Requirements](#requirements)
+      - [Steps](#steps)
+  - [Usage](#usage)
+  - [Commands for development](#commands-for-development)
+  - [Screenshots](#screenshots)
+    - [Student's profile detail page](#students-profile-detail-page)
+    - [Teacher's profile detail page](#teachers-profile-detail-page)
+    - [Chat detail page](#chat-detail-page)
+    - [Subject list page](#subject-list-page)
+    - [Subject detail page](#subject-detail-page)
+    - [Advert list page](#advert-list-page)
+    - [Student's advert detail page](#students-advert-detail-page)
+    - [Teacher's advert detail page](#teachers-advert-detail-page)
+    - [Advert create page](#advert-create-page)
+  - [Database diagram](#database-diagram)
+
 ## About
+
+The web application is a private teacher search platform. It allows students to find teachers and chat with them to schedule a private lesson. Teachers can create adverts for subjects. Students can also create reviews for teachers. It utilizes **Django**'s built-in admin panel for managing subjects and users.
+
+## Technologies
 
 The app's development was focused on learning the Django framework and its features. Design was added using **django-tailwind**.
 
@@ -49,7 +95,7 @@ The app's development was focused on learning the Django framework and its featu
 
 - The database is stored in the container, so it will be lost after the container is deleted
 
-### Using python **venv** *(Tested on Windows 11)*
+### Using python **venv** _(Tested on Windows 11)_
 
 #### Requirements
 
