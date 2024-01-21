@@ -3,33 +3,44 @@
 {% url 'subject_list' as subjects_url %}
 {% url 'advert_list' as adverts_url %}
 
-<nav class="bg-blue-950">
-        <div class="container flex justify-between p-5 mx-auto mb-5">
-                <ul class="flex justify-between space-x-4">
-                        <li><a href="{{ home_url }}"
-                                        class="text-white font-bold {% if request.path == home_url %}underline{% else %}hover:underline{% endif %}">Home</a>
-                        </li>
-                        {% if user.is_authenticated %}
-                        <li><a href="{{ chats_url }}"
-                                        class="text-white {% if request.path == chats_url %}underline{% else %}hover:underline{% endif %}">Chats</a>
-                        </li>
-                        {% endif %}
-                        <li><a href="{{ subjects_url }}"
-                                        class="text-white {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Subjects</a>
-                        </li>
-                        <li><a href="{{ adverts_url }}"
-                                        class="text-white {% if request.path == adverts_url %}underline{% else %}hover:underline{% endif %}">Adverts</a>
-                        </li>
-                </ul>
-                <ul class="flex justify-between space-x-4">
-                        {% if request.user.is_authenticated %}
-                        <li> <a href="{% url 'profile_detail' user.id %}"
-                                        class="text-white italic hover:underline">{{user.username}} </a></li>
-                        <li><a href="{% url 'logout' %}" class="text-white hover:underline">Logout</a></li>
-                        {% else %}
-                        <li><a href="{% url 'login' %}" class="text-white hover:underline">Login</a></li>
-                        <li><a href="{% url 'register' %}" class="text-white hover:underline">Register</a></li>
-                        {% endif %}
-                </ul>
-        </div>
+<nav class="bg-slate-50">
+  <div class="container flex justify-between p-3 mx mb-5">
+    <ul class="flex justify-between space-x-4">
+      <li><a href="{{ home_url }}"
+          class="text-slate-900 font-serif {% if request.path == home_url %}underline{% else %}hover:underline{% endif %}">Sākumlapa</a>
+      </li>
+      {% if user.is_authenticated %}
+      <li><a href="{{ chats_url }}"
+          class="text-slate-900 font-serif {% if request.path == chats_url %}underline{% else %}hover:underline{% endif %}">Tērzētava</a>
+      </li>
+      {% endif %}
+      <li><a href="{{ subjects_url }}"
+          class="text-slate-900 font-serif {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Mācību
+          tēmas</a>
+      </li>
+      <li><a href="{{ adverts_url }}"
+          class="text-slate-900 font-serif {% if request.path == adverts_url %}underline{% else %}hover:underline{% endif %}">Sludinājumi</a>
+      </li>
+      <li>
+        {% if user.is_authenticated and user.groups.all.0.name == 'teacher'%}
+        <a href="{% url 'advert_create' %}"
+          class="text-slate-900 font-serif {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Izveidot
+          sludinājumu</a>
+        {% endif %}
+      </li>
+    </ul>
+    <ul class="flex justify-between space-x-4">
+      {% if request.user.is_authenticated %}
+      <li> <a href="{% url 'profile_detail' user.id %}"
+          class="font-serif text-slate-900 italic hover:underline">{{user.username}} </a>
+      </li>
+      <li><a href="{% url 'logout' %}" class="font-serif text-slate-900 hover:underline">Logout</a></li>
+      {% else %}
+      <li><a href="{% url 'login' %}"
+          class="text-slate-900 font-serif hover:underline box-border p-1 border border-slate-900">Pieslēgties</a>
+      </li>
+      <!--<li><a href="{% url 'register' %}" class="text-white hover:underline">Reģistrēties</a></li>-->
+      {% endif %}
+    </ul>
+  </div>
 </nav>
