@@ -35,4 +35,6 @@ urlpatterns = [
 
     path("subject/", views.subjectList, name="subject_list"),
     path("subject/<int:pk>", views.subjectDetail, name="subject_detail"),
+
+    path("map/", views.map, name="map"),
 ]

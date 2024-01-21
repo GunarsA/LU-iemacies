@@ -1,0 +1,211 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<p class="text-3xl font-serif">Ceļveža priekšskatījums</p>
+
+<style>
+  /* svg {
+    border: 1px solid #ccc;
+  } */
+
+  .box-text {
+    color: red;
+    border: 5px solid red;
+  }
+
+  .box-hover:hover {
+    transition: all 0.1s linear;
+    text-decoration: underline;
+    font-size: 1.1em;
+  }
+
+  .box-hover:not(:hover) {
+    transition: all 0.1s linear;
+    font-size: 1em;
+  }
+</style>
+<div>
+  <script>
+    function RoadmapSVG(roadmap, svgWidth = 500, svgHeight = 500) {
+      const svgNS = "http://www.w3.org/2000/svg";
+      let svgElem = document.createElementNS(svgNS, "svg");
+      svgElem.setAttribute("width", svgWidth);
+      svgElem.setAttribute("height", svgHeight);
+
+      const rectWidth = 200;
+      const rectHeight = 75;
+
+      // Function to scale coordinates
+      function scaleCoord(coord) {
+        return [coord[0] * (svgWidth), coord[1] * (svgHeight)];
+      }
+
+      // Draw edges first so they are under the nodes
+      roadmap.edges.forEach(edge => {
+        let fromNode = roadmap.nodes.find(node => node.id === edge.from);
+        let toNode = roadmap.nodes.find(node => node.id === edge.to);
+
+        let [x1, y1] = scaleCoord(fromNode.coords);
+        let [x2, y2] = scaleCoord(toNode.coords);
+        let points = `M${x1},${y1} `;
+
+        edge.through.forEach(pt => {
+          let [px, py] = scaleCoord(pt);
+          points += `L${px},${py} `;
+        });
+
+        points += `L${x2},${y2}`;
+
+        let path = document.createElementNS(svgNS, "path");
+        path.setAttribute("d", points);
+        path.setAttribute("stroke", "black");
+        path.setAttribute("stroke", "#54a0ff"); // Set the color to blue
+        path.setAttribute("stroke-width", "1"); // Increase the thickness
+        path.setAttribute("fill", "none");
+        svgElem.appendChild(path);
+      });
+
+      // Draw nodes
+      roadmap.nodes.forEach(node => {
+        let [x, y] = scaleCoord(node.coords);
+
+        // Rectangle
+        let rect = document.createElementNS(svgNS, "rect");
+        rect.classList.add("rectangle");
+        rect.setAttribute("x", x - rectWidth / 2)
+        rect.setAttribute("y", y - rectHeight / 2);
+        rect.setAttribute("width", rectWidth);
+        rect.setAttribute("height", rectHeight);
+        rect.setAttribute("stroke", "#000000");
+        rect.setAttribute("fill", "#ffffff");
+
+        // Text
+        let text = document.createElementNS(svgNS, "text");
+        text.setAttribute("x", x);
+        text.setAttribute("y", y);
+        text.setAttribute("dominant-baseline", "middle");
+        text.setAttribute("text-anchor", "middle");
+        text.setAttribute("font-family", "serif");
+        text.textContent = node.name;
+
+        let group = document.createElementNS(svgNS, "g");
+        if (node.url) {
+          let a = document.createElementNS(svgNS, "a");
+          a.classList.add("box-text");
+          a.setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", node.url);
+          a.appendChild(rect);
+          a.appendChild(text);
+          group.appendChild(a);
+        } else {
+          group.appendChild(rect);
+          group.appendChild(text);
+        }
+        group.classList.add("box-hover"); // Add the hoverable class to the group
+
+        svgElem.appendChild(group);
+      });
+
+      return svgElem;
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const roadmapSVG = RoadmapSVG(roadmap, 800, 1000);
+      document.getElementById('roadmap-container').appendChild(roadmapSVG);
+    });
+
+  </script>
+  <script>
+    const roadmap = {
+      goal: 'Backend',
+      nodes: [
+        {
+          id: 'vskmat',
+          name: 'Vidusskolas matemātika',
+          coords: [0.5, 0.1],
+          url: '/vskmat'
+        },
+        {
+          id: 'diskreta',
+          name: 'Diskrētā Matemātika',
+          coords: [0.3, 0.25],
+          url: '/internet'
+        },
+        {
+          id: 'pp',
+          name: 'Python pamati',
+          coords: [0.3 + 0.4, 0.25],
+          url: '/internet'
+        },
+        {
+          id: 'linalg1',
+          name: 'Lineārā Algebra I',
+          coords: [0.3, 0.1 + 0.15 * 2],
+          url: '/learn-language'
+        },
+        {
+          id: 'linalg2',
+          name: 'Lineārā Algebra II',
+          coords: [0.3, 0.1 + 0.15 * 3],
+          url: '/learn-language'
+        },
+        {
+          id: 'c',
+          name: 'Reālā Analīze',
+          coords: [0.3, 0.1 + 0.15 * 4],
+          url: '/vcs'
+        },
+        {
+          id: 'measure',
+          name: 'Mēra teorija',
+          coords: [0.3, 0.1 + 0.15 * 5],
+          url: '/hello'
+        },
+        {
+          id: 'algo1',
+          name: 'Algoritmu pamati',
+          coords: [0.7, 0.1+0.15*2]
+        }
+      ],
+      edges: [
+        {
+          from: 'vskmat',
+          to: 'diskreta',
+          through: []
+        },
+        {
+          from: 'vskmat',
+          to: 'pp',
+          through: []
+        },
+        {
+          from: 'diskreta',
+          to: 'linalg1',
+          through: []
+        },
+        {
+          from: 'linalg1',
+          to: 'linalg2',
+          through: []
+        },
+        {
+          from: 'pp',
+          to: 'diskreta',
+          through: []
+        },
+        {
+          from: 'diskreta',
+          to: 'measure',
+          through: []
+        },
+        {
+          from: 'pp',
+          to: 'algo1',
+          through: []
+        }
+      ]
+    };
+  </script>
+  <div id="roadmap-container"></div>
+</div>
+
+{% endblock %}

@@ -603,3 +603,10 @@ def subjectDetail(request: HttpRequest, pk: int) -> HttpResponse:
     subject = get_object_or_404(Subject, pk=pk)
 
     return render(request, template_name, {'subject': subject})
+
+def map(request: HttpRequest) -> HttpResponse:
+    template_name = 'main/map.html'
+
+    map = Advert.objects.filter(is_active=True)
+
+    return render(request, template_name, {'map': map})

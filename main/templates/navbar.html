@@ -2,6 +2,7 @@
 {% url 'chat_list' as chats_url %}
 {% url 'subject_list' as subjects_url %}
 {% url 'advert_list' as adverts_url %}
+{% url 'map' as map_url %}
 
 <nav class="bg-gradient-to-r from-white to-slate-100">
   <div class="container flex justify-between p-3 mx mb-5">
@@ -20,6 +21,9 @@
       </li>
       <li><a href="{{ adverts_url }}"
           class="text-slate-900 font-serif {% if request.path == adverts_url %}underline{% else %}hover:underline{% endif %}">Sludinājumi</a>
+      </li>
+      <li><a href="{{ map_url }}"
+          class="text-slate-900 font-serif {% if request.path == map_url %}underline{% else %}hover:underline{% endif %}">Ceļvedis</a>
       </li>
       <li>
         {% if user.is_authenticated and user.groups.all.0.name == 'teacher'%}
