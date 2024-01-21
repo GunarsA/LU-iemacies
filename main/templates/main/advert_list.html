@@ -1,27 +1,26 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %}s
 {% block content %}
 
-<div class="p-2 bg-gradient-to-r from-white to-slate-50 grid grid-cols-3 gap-8">
+<div class="p-8 bg-gradient-to-r from-white to-slate-50 grid grid-cols-3 gap-8 bg-[url(books.jpg)] bg-contain">
   {% for advert in advert_list %}
-  <div class="border rounded-lg">
-    <div class="pb-2 pl-2 pt-2 bg-gradient-to-r from-sky-500 to-indigo-500">
+  <div class="">
+    <div class="pb-2 pl-2 pt-2 bg-gradient-to-r from-sky-500 to-indigo-500 rounded-t-sm">
       <a href="{% url 'subject_detail' advert.subject.id %}" class="font-serif text-white hover:underline text-xl">
         {{ advert.subject }}</a>
     </div>
-    <p class="font-serif text-sm text-slate-900 pt-5 pl-2 pb-5 pr-2">
-      {{ advert.description }}
+    <p class="font-serif text-sm text-slate-900 pt-5 pl-2 pb-5 pr-2 mb-auto h-24 bg-white">
+      {{ advert.description | truncatechars:100 }}
     </p>
-    <hr class="pt-1">
-    <p class="pl-2 pt-2 pb-2 pr-2 font-serif text-slate-900 text-sm">
-      Vidējais vērtējums: <span class="font-sans">{{ advert.get_average_rating|default:''}} ({{ advert.reviews.count }})</span>
+    <hr class="">
+    <p class="pl-2 pr-2 font-serif text-slate-900 text-sm h-8 bg-white pt-1">
+      Vidējais vērtējums: <span class="font-sans">{{ advert.get_average_rating|default:''}} (skaits: {{advert.reviews.count }})</span>
     </p>
-    <hr class="pt-1">
-    <p class="pl-2 pb-2 grid grid-cols-2 gap-8">
+    <hr class="">
+    <div class="pl-2 grid grid-cols-2 gap-8 h-8 bg-white rounded-b-md pt-1">
       <a href="{% url 'profile_detail' advert.owner.id %}" class="font-serif text-slate-900 hover:underline">
         {{advert.owner }}</a>
       <a href="{% url 'advert_detail' advert.id %}" class="font-serif text-slate-900 hover:underline">Lasīt vairāk ></a>
-    </p>
+    </div>
   </div>
   {% endfor %}
 </div>

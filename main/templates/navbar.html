@@ -3,11 +3,11 @@
 {% url 'subject_list' as subjects_url %}
 {% url 'advert_list' as adverts_url %}
 
-<nav class="bg-slate-50">
+<nav class="bg-gradient-to-r from-white to-slate-100">
   <div class="container flex justify-between p-3 mx mb-5">
     <ul class="flex justify-between space-x-4">
       <li><a href="{{ home_url }}"
-          class="text-slate-900 font-serif {% if request.path == home_url %}underline{% else %}hover:underline{% endif %}">Sākumlapa</a>
+          class="uppercase text-2xl pr-24 pl-6 text-slate-900 font-serif">iemacies.lv</a>
       </li>
       {% if user.is_authenticated %}
       <li><a href="{{ chats_url }}"
@@ -24,8 +24,7 @@
       <li>
         {% if user.is_authenticated and user.groups.all.0.name == 'teacher'%}
         <a href="{% url 'advert_create' %}"
-          class="text-slate-900 font-serif {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Izveidot
-          sludinājumu</a>
+          class="text-slate-900 font-serif {% if request.path == subjects_url %}underline{% else %}hover:underline{% endif %}">Izveidot sludinājumu</a>
         {% endif %}
       </li>
     </ul>

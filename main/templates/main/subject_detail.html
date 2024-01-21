@@ -4,52 +4,52 @@
 
 <div class="container mx-auto">
 
-    <div class="flex justify-between">
-        <h1 class="text-2xl font-bold">{{ subject.title }}</h1>
-        {% if user.is_authenticated and user.groups.all.0.name == 'teacher' %}
-        <a href="{% url 'advert_create' subject.id %}"
-            class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create Advert</a>
-        {% endif %}
-    </div>
+  <div class="flex justify-between">
+    <h1 class="text-2xl font-bold font-serif">{{ subject.title }}</h1>
+    {% if user.is_authenticated and user.groups.all.0.name == 'teacher' %}
+    <a href="{% url 'advert_create' subject.id %}"
+      class="inline-block bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create Advert</a>
+    {% endif %}
+  </div>
 
-    <h2 class="text-xl font-bold mt-4">Description</h2>
-    <p class="mt-2">{{ subject.description }}</p>
+  <h2 class="text-xl mt-4 font-serif">Apraksts</h2>
+  <p class="mt-2">{{ subject.description }}</p>
 
-    <h2 class="text-xl font-bold mt-4">Dependencies</h2>
-    {% for subject in subject.sub_subjects.all %}
-    <p class="mt-2"><a href="{% url 'subject_detail' subject.id %}" class="text-blue-500 hover:underline">
-            {{ subject.title }}</a></p>
-    {% endfor %}
+  <h2 class="text-xl mt-4 font-serif">Atkarības</h2>
+  {% for subject in subject.sub_subjects.all %}
+  <p class="mt-2"><a href="{% url 'subject_detail' subject.id %}" class="text-blue-500 hover:underline">
+      {{ subject.title }}</a></p>
+  {% endfor %}
 
-    <h2 class="text-xl font-bold mt-4">Adverts</h2>
-    <table class="mt-4 w-full table-auto border border-collapse">
-        <thead class="bg-gray-200">
-            <tr>
-                <th class="py-2 px-4 border">Teacher</th>
-                <th class="py-2 px-4 border">Review Count</th>
-                <th class="py-2 px-4 border">Average Rating</th>
-                <th class="py-2 px-4 border">Description</th>
-                <th class="py-2 px-4 border">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for advert in subject.adverts.all %}
-            <tr>
-                <td class="py-2 px-4 border">
-                    <a href="{% url 'profile_detail' advert.owner.id %}" class="text-blue-500 hover:underline">
-                        {{advert.owner }}</a>
-                </td>
-                <td class="py-2 px-4 border">{{ advert.reviews.count }}</td>
-                <td class="py-2 px-4 border">{{ advert.get_average_rating|default:''}}</td>
-                <td class="py-2 px-4 border">{{ advert.description }}</td>
-                <td class="py-2 px-4 border">
-                    <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">
-                        View </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+  <h2 class="text-xl mt-4 font-serif">Sludinājumi</h2>
+  <table class="mt-4 w-full table-auto border border-collapse">
+    <thead class="bg-gray-200">
+      <tr>
+        <th class="py-2 px-4 border">Teacher</th>
+        <th class="py-2 px-4 border">Review Count</th>
+        <th class="py-2 px-4 border">Average Rating</th>
+        <th class="py-2 px-4 border">Description</th>
+        <th class="py-2 px-4 border">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for advert in subject.adverts.all %}
+      <tr>
+        <td class="py-2 px-4 border">
+          <a href="{% url 'profile_detail' advert.owner.id %}" class="text-blue-500 hover:underline">
+            {{advert.owner }}</a>
+        </td>
+        <td class="py-2 px-4 border">{{ advert.reviews.count }}</td>
+        <td class="py-2 px-4 border">{{ advert.get_average_rating|default:''}}</td>
+        <td class="py-2 px-4 border">{{ advert.description }}</td>
+        <td class="py-2 px-4 border">
+          <a href="{% url 'advert_detail' advert.id %}" class="text-blue-500 hover:underline">
+            View </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 </div>
 
 {% endblock %}
