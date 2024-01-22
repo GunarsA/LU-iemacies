@@ -123,7 +123,7 @@ def profileDetail(request: HttpRequest, pk: int) -> HttpResponse:
     """
     template_name = 'main/profile_detail.html'
 
-    profile = get_object_or_404(Profile, pk=pk)
+    profile = get_object_or_404(User, pk=pk).profile
 
     return render(request, template_name, {'profile': profile})
 
